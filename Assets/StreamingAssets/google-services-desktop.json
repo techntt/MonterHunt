@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "874768030993",
+    "firebase_url": "https://blockshooter-6b70b.firebaseio.com",
+    "project_id": "blockshooter-6b70b",
+    "storage_bucket": "blockshooter-6b70b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874768030993:android:18b43637e2611e27",
+        "android_client_info": {
+          "package_name": "com.abi.balls.blockshooter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874768030993-a7ks0brp4ri971pbbfaelior5eip1im2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSA4JfmcSxeojJJK_HnH0I2NO1_D2ddoo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: eaeca13c0cbbedd4a8fdb7e3dd9ab26b
+timeCreated: 1525768748
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Beon
+  fontNames:
+  - Beon
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 427aa2216ac0a384186146353233fc79, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
