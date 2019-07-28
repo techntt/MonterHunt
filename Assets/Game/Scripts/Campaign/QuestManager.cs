@@ -94,7 +94,7 @@ public class QuestManager {
 	}
 
 	public static void ReadData () {
-		data = CSVReader.Read (Const.QUEST_DATA);
+		data = CSVReader.ReadDataToList(DataManager.Instance.quest);
 	}
 
 	public static QUEST_TYPE StringToQuestType (string s) {

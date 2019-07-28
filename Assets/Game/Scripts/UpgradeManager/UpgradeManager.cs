@@ -19,7 +19,7 @@ namespace UpgradeUI {
 		public Button nextShipBtn;
 		public Button prevShipBtn;
 
-		[HideInInspector]public SHIP_TYPE currentShip;
+		[HideInInspector]public int currentShip;
 		ShipUpgradeData currentShipData;
 
 		public GameObject prevNotice, nextNotice;
@@ -45,7 +45,7 @@ namespace UpgradeUI {
 
 		void Start () {
 			// spawn all ships the game has
-			ships = new Player[(int)SHIP_TYPE.NONE];
+			ships = new Player[ShipDataManager.Instance.shipData.Count];
 			for (int i = 0; i < ships.Length; i++) {
 				GameObject go = Instantiate(Resources.Load(Const.SHIP + i)) as GameObject;
 				ships[i] = (Player)go.GetComponent(typeof(Player));
@@ -84,7 +84,7 @@ namespace UpgradeUI {
 		/// <summary>
 		/// Views a ship based on ship type
 		/// </summary>
-		public void ViewShip (SHIP_TYPE ship) {
+		public void ViewShip (int ship) {
 			currentShip = ship;
 			currentShipData = PlayerData.Instance.shipData[currentShip];
 
@@ -93,16 +93,16 @@ namespace UpgradeUI {
 			prevShipBtn.interactable = true;
 			if ((int)ship == 0)
 				prevShipBtn.interactable = false;
-			else if ((int)ship == (int)SHIP_TYPE.NONE - 1)
+			else if ((int)ship == (ShipDataManager.Instance.shipData.Count - 1))
 				nextShipBtn.interactable = false;
 			// check if the prev ship is unlockable
 			if (prevShipBtn.interactable) {
-				prevNotice.SetActive(CanUnlockShip((SHIP_TYPE)((int)ship - 1)));
+				prevNotice.SetActive(CanUnlockShip(ship - 1));
 			} else
 				prevNotice.SetActive(false);
 			// check if the next ship is unlockable
 			if (nextShipBtn.interactable) {
-				nextNotice.SetActive(CanUnlockShip((SHIP_TYPE)((int)ship + 1)));
+				nextNotice.SetActive(CanUnlockShip(ship + 1));
 			} else
 				nextNotice.SetActive(false);
 			// deactivate the currently displayed ship
@@ -142,12 +142,12 @@ namespace UpgradeUI {
 
 		public void NextShip () {
 			int id = (int)currentShip + 1;
-			ViewShip((SHIP_TYPE)id);
+			ViewShip(id);
 		}
 
 		public void PrevShip () {
 			int id = (int)currentShip - 1;
-			ViewShip((SHIP_TYPE)id);
+			ViewShip(id);
 		}
 
 		public void BackToMenu () {
@@ -170,92 +170,73 @@ namespace UpgradeUI {
 			this.isDemoHp = isDemoHp;
 		}
 
-		public static int GetUpgradeDamageCost (SHIP_TYPE shipType, int currentLv) {
+		public static int GetUpgradeDamageCost (int id, int currentLv) {
 			currentLv = Mathf.Clamp(currentLv, 0, maxDamageUpgradeTime);
-			switch (shipType) {
-				case SHIP_TYPE.STING:
+			switch (id) {
+				case 0:
 					if (currentLv < 3)
 						return 250 + 500 * currentLv;
 					else
 						return 1250 + 1250 * (currentLv - 2);
-				case SHIP_TYPE.SWALLOW:
+				case 1:
 					return 2500 + (1750 * currentLv);
 				default:
 					return 0;
 			}
 		}
-
-		public static int GetUpgradeDamageRank (SHIP_TYPE ship, int currentLv) {
-			return ShipDataManager.Instance.shipData[ship].GetRequiredRankForDamage(currentLv);
-		}
-
-		public static int GetUpgradeHPCost (SHIP_TYPE shipType, int currentLv) {
+        
+		public static int GetUpgradeHPCost (int id, int currentLv) {
 			currentLv = Mathf.Clamp(currentLv, 0, maxHPUpgradeTime);
-			switch (shipType) {
-				case SHIP_TYPE.STING:
+			switch (id) {
+				case 0:
 					return 5000 + 1500 * currentLv;
-				case SHIP_TYPE.SWALLOW:
+				case 1:
 					return 7500 + 2750 * currentLv;
 				default:
 					return 0;
 			}
 		}
 
-		public static int GetUpgradeHPRank (SHIP_TYPE ship, int currentLv) {
-			return ShipDataManager.Instance.shipData[ship].GetRequiredRankForHp(currentLv);
-		}
 
-		public static int GetUpgradeMaxHPCost (SHIP_TYPE shipType, int currentLv) {
+		public static int GetUpgradeMaxHPCost (int id, int currentLv) {
 			currentLv = Mathf.Clamp(currentLv, 0, maxHPLimitUpgradeTime);
-			switch (shipType) {
-				case SHIP_TYPE.STING:
+			switch (id) {
+				case 0:
 					return 2500 + 2500 * currentLv;
-				case SHIP_TYPE.SWALLOW:
+				case 1:
 					return 3500 + currentLv * 3500;
 				default:
 					return 0;
 			}
 		}
 
-		public static int GetUpgradeMaxHPRank (SHIP_TYPE ship, int currentLv) {
-			return ShipDataManager.Instance.shipData[ship].GetRequiredRankForMaxHp(currentLv);
-		}
 
-		public static int GetUpgradeMagnetCost (SHIP_TYPE shipType, int currentLv) {
+		public static int GetUpgradeMagnetCost (int id, int currentLv) {
 			currentLv = Mathf.Clamp(currentLv, 0, maxMagnetUpgradeTime);
-			switch (shipType) {
-				case SHIP_TYPE.STING:
+			switch (id) {
+				case 0:
 					return 20000 + 15000 * currentLv;
-				case SHIP_TYPE.SWALLOW:
+				case 1:
 					return 30000 + currentLv * 25000;
 				default:
 					return 0;
 			}
 		}
 
-		public static int GetUpgradeMagnetRank (SHIP_TYPE ship, int currentLv) {
-			return ShipDataManager.Instance.shipData[ship].GetRequiredRankForMagnet(currentLv);
+		public static int GetUnlockShipCost (int ship) {
+			return ShipDataManager.Instance.shipData[ship].crystal;
 		}
-
-		public static int GetUnlockShipCost (SHIP_TYPE ship) {
-			return ShipDataManager.Instance.shipData[ship].gold;
-		}
-
-		public static int GetUnlockShipRank (SHIP_TYPE ship) {
-			return ShipDataManager.Instance.shipData[ship].rank;
-		}
-
-		public static bool CanUnlockShip (SHIP_TYPE ship) {
-			if (ship == SHIP_TYPE.STING)
+        
+		public static bool CanUnlockShip (int ship) {
+			if (ship == 0)
 				return false;
 			else if (PlayerData.Instance.shipData[ship].unlocked)
 				return false;
 			else {
-				SHIP_TYPE prevShip = (SHIP_TYPE)((int)ship - 1);
+				int prevShip = ship - 1;
 				bool isCampaignPassed = CampaignManager.campaign.id > ShipDataManager.Instance.shipData[ship].campaignPassed;
 				bool isPrevShipUnlocked = PlayerData.Instance.shipData[prevShip].unlocked;
-				bool isEnoughRank = PlayerData.Instance.rank >= ShipDataManager.Instance.shipData[ship].rank;
-				return isCampaignPassed && isPrevShipUnlocked && isEnoughRank;
+				return isCampaignPassed && isPrevShipUnlocked;
 			}
 		}
 

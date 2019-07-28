@@ -6,7 +6,7 @@ public class ShipContainer : SingletonMonoBehaviour<ShipContainer> {
 	public Player[] ship;
 	Player currentShip;
 
-	public void ShowShip (SHIP_TYPE type) {
+	public void ShowShip (int type) {
 		if (currentShip != null)
 			currentShip.gameObject.SetActive(false);
 		currentShip = ship[(int)type];

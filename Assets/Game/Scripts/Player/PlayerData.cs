@@ -26,7 +26,7 @@ public class ShipUpgradeData {
 
 public class PlayerData : Singleton<PlayerData> {
 
-	public SHIP_TYPE selectedShip;
+	public int selectedShip;
 	private int _gold;
 	public int gold {
 		get { 
@@ -54,7 +54,7 @@ public class PlayerData : Singleton<PlayerData> {
 	}
 	public event GoldEvent OnRankChange;
 
-	public SortedList<SHIP_TYPE, ShipUpgradeData> shipData;
+	public SortedList<int, ShipUpgradeData> shipData;
 
 	public int currentMission;
 	public int bestScore;
@@ -64,25 +64,25 @@ public class PlayerData : Singleton<PlayerData> {
 	public int retryTimes;
 
 	public PlayerData () {
-		selectedShip = (SHIP_TYPE)PlayerPrefs.GetInt(Const.SELECTED_SHIP, 0);
+		selectedShip = PlayerPrefs.GetInt(Const.SELECTED_SHIP, 0);
 		gold = PlayerPrefs.GetInt(Const.GOLD, 0);
 		rank = PlayerPrefs.GetInt(Const.RANK, 0);
-//		gold = 696969;
-//		rank = 1069;
+
 		currentMission = PlayerPrefs.GetInt(Const.MISSION, 0);
 		retryTimes = PlayerPrefs.GetInt(Const.RETRY, 0);
 		bestScore = PlayerPrefs.GetInt(Const.BEST_SCORE, 0);
-		shipData = new SortedList<SHIP_TYPE, ShipUpgradeData>();
-		for (int i = 0; i < (int)SHIP_TYPE.NONE; i++) {
-			string result = PlayerPrefs.GetString(((SHIP_TYPE)i).ToString(), "");
+		shipData = new SortedList<int, ShipUpgradeData>();
+        Debug.Log("Ship number: "+ ShipDataManager.Instance.shipData.Count);
+		for (int i = 0; i < ShipDataManager.Instance.shipData.Count; i++) {
+			string result = PlayerPrefs.GetString((i).ToString(), "");
 			ShipUpgradeData sud = null;
 			if (result != "")
 				sud = JsonUtility.FromJson<ShipUpgradeData>(result);
 			else
 				sud = new ShipUpgradeData();
-			shipData.Add((SHIP_TYPE)i, sud);
+			shipData.Add(i, sud);
 		}
-		shipData[SHIP_TYPE.STING].unlocked = true;
+		shipData[0].unlocked = true;
 	}
 
 	public void SaveAllData () {
@@ -93,18 +93,18 @@ public class PlayerData : Singleton<PlayerData> {
 		PlayerPrefs.SetInt(Const.RETRY, retryTimes);
 		PlayerPrefs.SetInt(Const.BEST_SCORE, bestScore);
 		for (int i = 0; i < shipData.Count; i++) {
-			SaveShipData((SHIP_TYPE)i);
+			SaveShipData(i);
 		}
 	}
 
-	public void SaveShipData (SHIP_TYPE ship) {
+	public void SaveShipData (int ship) {
 		PlayerPrefs.SetString(ship.ToString(), JsonUtility.ToJson(shipData[ship]));
 	}
 
-	public SHIP_TYPE GetHighestShip () {
-		for (int i = (int)SHIP_TYPE.NONE - 1; i >= 0; i--)
-			if (shipData[(SHIP_TYPE)i].unlocked)
-				return (SHIP_TYPE)i;
-		return SHIP_TYPE.STING;
+	public int GetHighestShip () {
+		for (int i = (ShipDataManager.Instance.shipData.Count - 1); i >= 0; i--)
+			if (shipData[i].unlocked)
+				return i;
+		return 0;
 	}
 }

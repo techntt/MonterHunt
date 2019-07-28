@@ -3,86 +3,97 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public class CSVReader {
-    static string SPLIT_RE = ";";
-    //static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
-    //static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
-    static string LINE_SPLIT_RE = @"\n|\r";
-    static char[] TRIM_CHARS = { '\"' };
-    static string comma = "|";
 
-    public static List<Dictionary<string, string>> Read(TextAsset data) {
-        var list = new List<Dictionary<string, string>>();
-        if (data == null) {
-            return list;
-        }
-        var lines = Regex.Split(data.text, LINE_SPLIT_RE);
-        if (lines.Length <= 1)
-            return list;
-
-        var header = Regex.Split(lines[0], SPLIT_RE);
-        for (var i = 1; i < lines.Length; i++) {
-
-            var values = Regex.Split(lines[i], SPLIT_RE);
-            if (values.Length == 0 || values[0] == "")
-                continue;
-
-            var entry = new Dictionary<string, string>();
-            for (var j = 0; j < header.Length && j < values.Length; j++) {
-                string value = values[j];
-                value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS);
-                value = value.Replace(comma, ",");
-                entry[header[j]] = value;
+    static char[] LINE_CHAR = { '\n', ' ' };
+    static char[] CONTENT_CHAR = { ';' };
+     
+    public static List<Dictionary<string,string>> ReadDataToList(string data)
+    {
+        List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
+        try
+        {
+            string[] lines = data.Split(LINE_CHAR);
+            if (lines.Length > 1)
+            {
+                string[] header = lines[0].Split(CONTENT_CHAR) ;
+                for(int i = 1; i < lines.Length; i++)
+                {
+                    string[] contents = lines[i].Split(CONTENT_CHAR);
+                    Dictionary<string, string> dict = new Dictionary<string, string>();
+                    for (int j=0;j<contents.Length && j < header.Length; j++)
+                    {
+                        if (!dict.ContainsKey(header[j].Trim()))
+                        {
+                            dict.Add(header[j].Trim(), contents[j].Trim());
+                        }
+                    }
+                    list.Add(dict);
+                }
+                return list;
             }
-            list.Add(entry);
+        }catch(System.Exception ex)
+        {
+            Debug.Log("[CSVReader] " + ex.Message);
+            return null;
         }
-        return list;
+        return null;
     }
 
-    public static List<Dictionary<string, string>> Read(string file) {
-        TextAsset data = Resources.Load(file) as TextAsset;
-        var list = Read(data);
-        return list;
+
+    public static List<Dictionary<string, string>> ReadDataToListFromFile(string path)
+    {
+        TextAsset txData = ReadDataFromFile(path);
+        if (txData == null)
+            return null;
+        return ReadDataToList(txData.text);
     }
 
-    public static Dictionary<string, List<string>> ReadPro(string file) {
-        TextAsset data = Resources.Load(file) as TextAsset;
-        var dic = ReadPro(data);
-        return dic;
-    }
-    /// <summary>
-    /// Key của các dictionary là header.
-    /// </summary>
-    /// <param name="data"></param>
-    /// <returns></returns>
-    public static Dictionary<string, List<string>> ReadPro(TextAsset data) {
-        var dic = new Dictionary<string, List<string>>();
-        if (data == null) {
-            return dic;
-        }
-        var lines = Regex.Split(data.text, LINE_SPLIT_RE);
-        if (lines.Length <= 1)
-            return dic;
 
-        var header = Regex.Split(lines[0], SPLIT_RE);
-        int length = header.Length;
-        for (int i = 0; i < length; i++) {
-            var list = new List<string>();
-            dic.Add(header[i], list);
-        }
-
-        for (var i = 1; i < lines.Length; i++) {
-
-            var values = Regex.Split(lines[i], SPLIT_RE);
-            if (values.Length == 0 || values[0] == "")
-                continue;
-
-            for (var j = 0; j < header.Length && j < values.Length; j++) {
-                string value = values[j];
-                value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS);
-                value = value.Replace(comma, ",");
-                dic[header[j]].Add(value);
+    public static Dictionary<string,Dictionary<string, string>> ReadDataToDict(string data)
+    {
+        Dictionary<string,Dictionary<string, string>> list = new Dictionary<string,Dictionary<string, string>>();
+        try
+        {
+            string[] lines = data.Split(LINE_CHAR);
+            if (lines.Length > 1)
+            {
+                string[] header = lines[0].Split(CONTENT_CHAR);
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    string[] contents = lines[i].Split(CONTENT_CHAR);
+                    Dictionary<string, string> dict = new Dictionary<string, string>();
+                    for (int j = 0; j < contents.Length && j < header.Length; j++)
+                    {
+                        if (!dict.ContainsKey(header[j].Trim()))
+                        {
+                            dict.Add(header[j].Trim(), contents[j].Trim());
+                        }
+                    }
+                    list.Add(header[0].Trim(),dict);
+                }
+                return list;
             }
         }
-        return dic;
+        catch (System.Exception ex)
+        {
+            Debug.Log("[CSVReader] " + ex.Message);
+            return null;
+        }
+        return null;
+    }
+
+
+    public static Dictionary<string, Dictionary<string, string>> ReadDataToDictFromFile(string path)
+    {
+        TextAsset txData = ReadDataFromFile(path);
+        if (txData == null)
+            return null;
+        return ReadDataToDict(txData.text);
+    }
+
+    private static TextAsset ReadDataFromFile(string path)
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>(path) as TextAsset;
+        return textAsset;
     }
 }

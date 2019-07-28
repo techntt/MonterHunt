@@ -17,20 +17,19 @@ namespace UpgradeUI {
 
 		void HandleOnViewShip (ShipUpgradeData s) {
 			if (!s.unlocked) {
-				SHIP_TYPE type = UpgradeManager.Instance.currentShip;
+				int id = UpgradeManager.Instance.currentShip;
 				ShipData data = ShipDataManager.Instance.shipData[UpgradeManager.Instance.currentShip];
-				SHIP_TYPE prevType = (SHIP_TYPE)((int)type - 1);
-				bool isPrevShipUnlocked = PlayerData.Instance.shipData[prevType].unlocked;
+				int prevId = id - 1;
+				bool isPrevShipUnlocked = PlayerData.Instance.shipData[prevId].unlocked;
 				bool isCampaignPassed = CampaignManager.campaign.id > ShipDataManager.Instance.shipData[UpgradeManager.Instance.currentShip].campaignPassed;
 				unlockCost = UpgradeManager.GetUnlockShipCost(UpgradeManager.Instance.currentShip);
-				unlockRank = UpgradeManager.GetUnlockShipRank(UpgradeManager.Instance.currentShip);
 				// first, check if player has match the campaign passed requirement
 				if (!isCampaignPassed) {
 					requirement.text = string.Format("You need to pass mission {0} first", data.campaignPassed + 1);
 				}
 				// after that, check if the previous ship is unlocked
 				else if (!isPrevShipUnlocked) {
-					requirement.text = string.Format("You need to unlock {0} first", ShipDataManager.Instance.shipData[prevType].shipName);
+					requirement.text = string.Format("You need to unlock {0} first", ShipDataManager.Instance.shipData[prevId].shipName);
 				} else if (unlockRank > PlayerData.Instance.rank) {
 					requirement.text = string.Format("Require rank {0}", unlockRank);
 				} else {

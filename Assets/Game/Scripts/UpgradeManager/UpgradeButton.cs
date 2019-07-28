@@ -42,7 +42,6 @@ namespace UpgradeUI {
 							upgradeButton.gameObject.SetActive(true);
 						upgradeText.text = "+ " + s.damageLv * 10 + "%";
 						goldRequired = UpgradeManager.GetUpgradeDamageCost(UpgradeManager.Instance.currentShip, s.damageLv);
-						rankRequired = UpgradeManager.GetUpgradeDamageRank(UpgradeManager.Instance.currentShip, s.damageLv);
 						break;
 					case UpgradeType.Health:
 						if (s.hpLv == UpgradeManager.maxHPUpgradeTime)
@@ -51,7 +50,6 @@ namespace UpgradeUI {
 							upgradeButton.gameObject.SetActive(true);
 						upgradeText.text = "+ " + s.hpLv;
 						goldRequired = UpgradeManager.GetUpgradeHPCost(UpgradeManager.Instance.currentShip, s.hpLv);
-						rankRequired = UpgradeManager.GetUpgradeHPRank(UpgradeManager.Instance.currentShip, s.hpLv);
 						break;
 					case UpgradeType.MaxHealth:
 						if (s.hpLimitLv == UpgradeManager.maxHPLimitUpgradeTime)
@@ -60,7 +58,6 @@ namespace UpgradeUI {
 							upgradeButton.gameObject.SetActive(true);
 						upgradeText.text = "+ " + s.hpLimitLv;
 						goldRequired = UpgradeManager.GetUpgradeMaxHPCost(UpgradeManager.Instance.currentShip, s.hpLimitLv);
-						rankRequired = UpgradeManager.GetUpgradeMaxHPRank(UpgradeManager.Instance.currentShip, s.hpLimitLv);
 						break;
 					case UpgradeType.Magnet:
 						if (s.magnetLv == UpgradeManager.maxMagnetUpgradeTime)
@@ -69,7 +66,6 @@ namespace UpgradeUI {
 							upgradeButton.gameObject.SetActive(true);
 						upgradeText.text = "+ " + s.magnetLv;
 						goldRequired = UpgradeManager.GetUpgradeMagnetCost(UpgradeManager.Instance.currentShip, s.magnetLv);
-						rankRequired = UpgradeManager.GetUpgradeMagnetRank(UpgradeManager.Instance.currentShip, s.magnetLv);
 						break;
 				}
 				if (rankRequired > PlayerData.Instance.rank) {

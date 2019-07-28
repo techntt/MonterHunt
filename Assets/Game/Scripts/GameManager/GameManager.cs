@@ -116,8 +116,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		GameEventManager.Instance.OnGameStart();
 		InvokeRepeating("AddTime", 1, 1);
 		GlobalEventManager.Instance.OnGameStart();
-		//show the daily quest tracker
-		GameUIManager.Instance.ShowDailyQuestTracker();
 	}
 
 	void Update () {

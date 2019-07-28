@@ -9,7 +9,7 @@ namespace UpgradeUI {
 		public Image ship;
 		public Text shipHealth;
 		public Image Lock;
-		public SHIP_TYPE myShipType;
+		public int myShipId;
 		public Image notice;
 
 		public void SetShipState (ShipUpgradeData data) {
@@ -24,7 +24,7 @@ namespace UpgradeUI {
 					Lock.enabled = true;
 				shipHealth.text = "";
 				ship.color = Color.black;
-				if (UpgradeManager.CanUnlockShip(myShipType))
+				if (UpgradeManager.CanUnlockShip(myShipId))
 					notice.enabled = true;
 				else
 					notice.enabled = false;
@@ -33,8 +33,8 @@ namespace UpgradeUI {
 
 		public void ViewShip () {
 			SoundManager.Instance.PlayUIButtonClick();
-			UpgradeManager.Instance.ViewShip(myShipType);
-			GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "view_ship_" + myShipType.ToString());
+			UpgradeManager.Instance.ViewShip(myShipId);
+			GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "view_ship_" + myShipId);
 		}
 	}
 }

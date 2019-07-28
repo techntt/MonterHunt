@@ -12,7 +12,6 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 	bool isEarlyGame = true;
 	public float h1Chance, h2Chance, h5Chance, h4Chance;
 	SortedList<int, HpChance> hpChances;
-	SortedList<int, ObjectData> timeLine;
 	public float minSpeed = 1, maxSpeed = 4;
 	public float minDelayTime = 1, maxDelayTime = 0.3f;
 
@@ -46,18 +45,10 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 
 	BaseFormation bf1, bf2;
 	BaseBoss boss;
-
-    // flexible time using for spawn special object in case its time spawn in phase of FORM
-    private int flexibleTime = 0;
-    //
-    private Destroyer.Destroy_Style levelOfDestroyer = Destroyer.Destroy_Style.Easy;
-
-    // Special Object Queue
-    private Queue<ObjectData> specObjs;
+    
 
 	void Awake () {
 		ReadDifficultyData();
-		ReadTimeLineData();
 		hardenChance = minHardenChance;
 		phase1 = CampaignManager.campaign.phase1;
 		phase2 = CampaignManager.campaign.phase2;
@@ -97,23 +88,7 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 		go = Instantiate(Resources.Load(Const.BOSS + CampaignManager.campaign.bossID)) as GameObject;
 		boss = (BaseBoss)go.GetComponent(typeof(BaseBoss));
 		boss.maxHp = CampaignManager.campaign.bossHp;
-
-        // spawn special object by time
-        specObjs = new Queue<ObjectData>();
         
-        IList<int> keys = timeLine.Keys;
-        foreach(int k in keys)
-        {
-            int id = timeLine[k].id;
-            go = Instantiate(Resources.Load(Const.SPECIAL_OBJECT + id)) as GameObject;
-            go.SetActive(true);
-            ObjectData data = new ObjectData();
-            data.id = id;
-            data.speed = timeLine[k].speed;
-            go.SetActive(false);
-            data.obj = go;            
-            specObjs.Enqueue(data);
-        }
 	}
 
 	void HandleOnGameStart () {
@@ -147,7 +122,7 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 
 	void ReadDifficultyData () {
 		hpChances = new SortedList<int, HpChance>();
-		List<Dictionary<string, string>> data = CSVReader.Read(Const.DIFFICULTY_DATA + CampaignManager.campaign.id);
+		List<Dictionary<string, string>> data = CSVReader.ReadDataToList(DataManager.Instance.difficulty[CampaignManager.campaign.id]);
 		maxHP = int.Parse(data[0]["maxHp"]);
 		h1 = maxHP / 5;
 		h4 = maxHP - h1;
@@ -172,18 +147,7 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 		h4Chance = hpChances[0].h4;
 		h5Chance = hpChances[0].h5;
 	}
-
-	void ReadTimeLineData () {
-		timeLine = new SortedList<int, ObjectData>();
-		List<Dictionary<string, string>> data = CSVReader.Read(Const.TIMELINE_DATA + CampaignManager.campaign.id);
-		for (int i = 0; i < data.Count; i++) {
-			int time = int.Parse(data[i]["time"]);
-			ObjectData ob = new ObjectData();
-			ob.id = int.Parse(data[i]["object"]);
-			ob.speed = float.Parse(data[i]["speed"]);
-			timeLine.Add(time, ob);
-		}
-	}
+    
 
 	void HandleGamePhaseChanged (GAME_PHASE phase) {
 		switch (phase) {
@@ -377,77 +341,7 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
             m.simulationSpeed = GameManager.GetLinearValueSimilarTo(0, estimatedTime, 1, 5, time);
             // change spawned rate of harden type
             hardenChance = (int)GameManager.GetLinearValueSimilarTo(0, estimatedTime, minHardenChance, maxHardenChance, time);
-        }
-
-        /*
-         * Handle spawn object follow timeline which is readed from csv file name timeline_x
-         */
-        
-        if (timeLine.Count > 0 && time == (timeLine.Keys[0] + flexibleTime))
-        {
-            
-            if (GameManager.Instance.phase == GAME_PHASE.FORM1 || GameManager.Instance.phase == GAME_PHASE.FORM2)
-            {
-                flexibleTime += 2; // add 2s for player kill form object
-            }
-            else if(GameManager.Instance.phase != GAME_PHASE.BOSS)
-            {
-                // spawn special object
-                ObjectData data = specObjs.Dequeue();
-                int id = data.id;
-                GameObject go = data.obj;
-                go.SetActive(true);
-
-                if (id == 99) // 
-                {
-                    Destroyer dobj = go.GetComponent(typeof(Destroyer)) as Destroyer;
-                    dobj.Init(levelOfDestroyer);
-                    switch (levelOfDestroyer)
-                    {
-                        case Destroyer.Destroy_Style.Easy:
-                            levelOfDestroyer = Destroyer.Destroy_Style.Normal;
-                            break;
-                        case Destroyer.Destroy_Style.Normal:
-                            levelOfDestroyer = Destroyer.Destroy_Style.Hard;
-                            break;
-                    }
-                }
-                else
-                {
-                    SpecialObject spObj = (SpecialObject)go.GetComponent(typeof(SpecialObject));
-                    BasePath path = (BasePath)go.GetComponent(typeof(BasePath));
-                    path.speed =  data.speed + bonusSpeed;
-                    int dumHp = GetRandomHP();
-                    float dumSize = GetRandomSize();
-                    // Because special object need time to active effect => If It has low hp,it can die before it do effect.
-                    switch (spObj.type)
-                    {
-                        case SpecialObject.SPOBJ_TYPE.SATELLITE:
-                            dumHp = Random.Range(h3, h4 + 1); // Statellite
-                            dumSize = Random.Range(0.8f, maxSize);
-                            break;
-                        case SpecialObject.SPOBJ_TYPE.GRAVITY:
-                            dumHp = Random.Range(h3, h4 + 1); // gravity
-                            dumSize = Random.Range(0.8f, maxSize);
-                            break;
-                        case SpecialObject.SPOBJ_TYPE.SPIRIT:
-                            dumHp = Random.Range(h4, maxHP + 1);  // Spirit
-                            dumSize = Random.Range(1f, maxSize);
-                            break;
-                        case SpecialObject.SPOBJ_TYPE.DIVISION:
-                            dumHp = Random.Range(h4, maxHP) * 5; // DiviSion
-                            dumSize = Random.Range(0.8f, maxSize);
-                            break;
-                    }
-                    spObj.Init(dumHp, dumSize);
-                    spObj.Id = id;
-                    ColliderRef.Instance.DamageableRef.Add(spObj.myCollider.GetInstanceID(), spObj);
-                }
-
-                timeLine.RemoveAt(0);
-            }
-           
-        }        
+        }  
 	}
 
 	public static int GetNumberOfCoinBySize (float size) {
@@ -487,10 +381,4 @@ public class HpChance {
 		this.h4 = h4;
 		this.h5 = h5;
 	}
-}
-
-public class ObjectData {
-	public int id;
-	public float speed;
-    public GameObject obj;
 }

@@ -9,7 +9,7 @@ public class CampaignManager {
 	public static Campaign campaign;
 
 	public static void ReadData () {
-		List<Dictionary<string, string>> data = CSVReader.Read (Const.CAMPAIGN_DATA);
+		List<Dictionary<string, string>> data = CSVReader.ReadDataToList(DataManager.Instance.campaign);
 		campaign = new Campaign();
 		// get campaign's id and name
 		int i = Mathf.Clamp(PlayerData.Instance.currentMission, 0, maxId);

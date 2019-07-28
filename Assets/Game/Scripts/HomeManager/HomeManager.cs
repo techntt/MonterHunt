@@ -6,28 +6,23 @@ using UnityEngine.UI;
 using UpgradeUI;
 
 public class HomeManager : SingletonMonoBehaviour<HomeManager> {
-
 	//----------new UI content--------------
 	public Text goldText;
 	public Text rankText;
-	public Text waveText;
-	public Text highScoreText;
-	public Text missionName;
-	public Image missionImage;
 	public Image questNotice;
 	public Image upgradeNotice;
-	public GameObject nextShip, prevShip;
-	public Text target;
 	public Sprite[] missionBg;
 	public RectTransform PlayBtn;
 	public RectTransform questBtn;
 	public RectTransform upgradeBtn;
+
+    public GameObject missionPass, missionFuture;
+    public Text tvPass, tvFuture;
+    public Image missionBoss;
 	//--------------------------------------
 
 	public HOME_STATE state;
-
-	List<SHIP_TYPE> availableShip;
-
+	List<int> availableShip;
 	string currentVersion = "1.1";
 
 	void Awake () {
@@ -74,34 +69,32 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 
 	void InitUI () {
 		// get list of available ships
-		availableShip = new List<SHIP_TYPE>();
-		for (int i = 0; i < (int)SHIP_TYPE.NONE; i++) {
-			if (PlayerData.Instance.shipData[(SHIP_TYPE)i].unlocked)
-				availableShip.Add((SHIP_TYPE)i);
+		availableShip = new List<int>();
+		for (int i = 0; i < ShipDataManager.Instance.shipData.Count; i++) {
+			if (PlayerData.Instance.shipData[i].unlocked)
+				availableShip.Add(i);
 		}
-		if (availableShip.Count > 1) {
-			nextShip.SetActive(true);
-			prevShip.SetActive(true);
-		} else {
-			nextShip.SetActive(false);
-			prevShip.SetActive(false);
-		}
+        
 		PlayerData_Instance_OnGoldChange(0);
 		PlayerData_Instance_OnRankChange(0);
 		UpdateShip();
 		PlayerData.Instance.OnGoldChange += PlayerData_Instance_OnGoldChange;
 		PlayerData.Instance.OnRankChange += PlayerData_Instance_OnRankChange;
-		// get information of current campaign
-		waveText.text = "" + (PlayerData.Instance.currentMission + 1);
-		highScoreText.text = PlayerData.Instance.bestScore.ToString();
+		// get information of current campaign		
 		Campaign c = CampaignManager.campaign;
-		missionName.text = c.name;
-		missionImage.sprite = missionBg[c.bossID];
-		target.text = string.Format("{0}", c.objective);
+        if (c.id > 0)
+        {
+            tvPass.text = c.id.ToString();
+            missionPass.SetActive(true);
+        }
+        else
+            missionPass.SetActive(false);
+        tvFuture.text = (c.id + 2).ToString();
+		missionBoss.sprite = missionBg[c.bossID];
 		// check if player can upgrade current ship
 		UpgradeNotice();
 		// check if there's any completed quest
-		if (QuestManager.hasCompletedQuest || DailyQuestManager.Instance.status == DAILY_QUEST_STATUS.COMPLETED)
+		if (QuestManager.hasCompletedQuest)
 			questNotice.enabled = true;
 		else
 			questNotice.enabled = false;
@@ -110,28 +103,9 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 	public void UpgradeNotice () {
 		int gold = PlayerData.Instance.gold;
 		int rank = PlayerData.Instance.rank;
-		SHIP_TYPE type = PlayerData.Instance.selectedShip;
-		ShipUpgradeData data = PlayerData.Instance.shipData[type];
-		bool result = false;
-		if (gold >= UpgradeManager.GetUpgradeDamageCost(type, data.damageLv)
-		    && rank >= UpgradeManager.GetUpgradeDamageRank(type, data.damageLv)) {
-			result = true;
-		} else if (gold >= UpgradeManager.GetUpgradeHPCost(type, data.hpLv)
-		           && rank >= UpgradeManager.GetUpgradeHPRank(type, data.hpLv)) {
-			result = true;
-		} else if (gold >= UpgradeManager.GetUpgradeMaxHPCost(type, data.hpLimitLv)
-		           && rank >= UpgradeManager.GetUpgradeMaxHPRank(type, data.hpLimitLv)) {
-			result = true;
-		} else if (gold >= UpgradeManager.GetUpgradeMagnetCost(type, data.magnetLv)
-		         && rank >= UpgradeManager.GetUpgradeMagnetRank(type, data.magnetLv)) {
-			result = true;
-		}
-		for (int i = (int)type; i < (int)SHIP_TYPE.NONE; i++) {
-			if (UpgradeManager.CanUnlockShip((SHIP_TYPE)i)) {
-				result = true;
-				break;
-			}
-		}
+		int id = PlayerData.Instance.selectedShip;
+		ShipUpgradeData data = PlayerData.Instance.shipData[id];
+		bool result = false;		
 		upgradeNotice.enabled = result;
 	}
 
@@ -167,7 +141,7 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "prev_ship");
 	}
 
-	void SelectShip (SHIP_TYPE type) {
+	void SelectShip (int type) {
 		PlayerData.Instance.selectedShip = type;
 		UpdateShip();
 	}

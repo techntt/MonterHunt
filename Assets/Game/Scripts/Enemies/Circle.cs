@@ -161,14 +161,7 @@ public class Circle : Damageable {
 				Coin c = CoinManager.Instance.PopCoin();
 				c.transform.position = transform.localPosition;
 				c.Init();
-			}
-			if (DailyQuestManager.Instance.status == DAILY_QUEST_STATUS.ACTIVE) {
-				if (Random.Range(0, 100) < DailyQuestManager.Instance.dropChance) {
-					DailyItem d = DailyItemManager.Instance.PopItem();
-					d.transform.position = transform.localPosition;
-					d.Init();
-				}
-			}
+			}			
 		}
 		if (hasScore) {
 			// add score, create effect adding score

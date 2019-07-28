@@ -99,14 +99,14 @@ public class Player : MonoBehaviour {
 
 	void Start () {
 		if (PopupManager.Instance.scene == SCENE.GAME) {
-			SHIP_TYPE type = PlayerData.Instance.selectedShip;
+			int type = PlayerData.Instance.selectedShip;
 			myShipData = ShipDataManager.Instance.shipData[type];
 			myShipUpgradeData = PlayerData.Instance.shipData[type];
 			// add bonus damage from upgrade
 			baseDamage = myShipData.baseDamage * (1 + 0.1f * PlayerData.Instance.shipData[type].damageLv + xDamage);
 			xDamage = 0;
 			xPoint = 1;
-			shipXPoint = myShipData.baseScore + CampaignManager.campaign.id + 1;
+			shipXPoint = CampaignManager.campaign.id + 1;
 			maxHealth = 40 + myShipUpgradeData.hpLimitLv;
 			//add bonus health from upgrade
 			health = 1 + myShipUpgradeData.hpLv;
@@ -121,7 +121,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void UpdateStat (SHIP_TYPE type) {
+	public void UpdateStat (int type) {
 		myShipUpgradeData = PlayerData.Instance.shipData[type];
 		// set xDamage variable to automatically set color of bullet
 		xDamage = 0;

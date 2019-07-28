@@ -5,7 +5,20 @@ using Firebase.Analytics;
 
 public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 
+    #region Inspector Variables
+    //-------------Data-----------//
+    public TextAsset campaignData;
+    public TextAsset shipData;
+    public TextAsset questData;
+    [SerializeField]
+    public TextAsset[] difficulty;
+    //----------------------------//
+    #endregion;
+        
     protected bool firebaseInitialized = false;
+
+
+#region Unity Methods
     void Awake () {
 		Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
 			var dependencyStatus = task.Result;
@@ -33,7 +46,27 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 		GlobalEventManager.Instance.gameEnd += HandleGameEnd;
 	}
 
-	void HandleGameStart () {
+    #endregion;
+
+#region Firebase Config
+    public void GetDataFromLocal()
+    {
+        DataManager.Instance.campaign = campaignData.text;
+        DataManager.Instance.ship = shipData.text;
+        DataManager.Instance.quest = questData.text;
+        DataManager.Instance.difficulty = new string[difficulty.Length];
+        for(int i = 0; i < difficulty.Length; i++)
+        {
+            DataManager.Instance.difficulty[i] = difficulty[i].text;
+        }
+
+        ShipDataManager.Instance.InitData();
+    }
+#endregion;
+
+    #region Firebase Event Handle
+
+    void HandleGameStart () {
         if (!firebaseInitialized)
             return;
         Parameter[] p = new Parameter[] { 
@@ -153,14 +186,16 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 		FirebaseAnalytics.SetUserProperty(UserProperty.currentMission, CampaignManager.campaign.id.ToString());
 		FirebaseAnalytics.SetUserProperty(UserProperty.rank, PlayerData.Instance.rank.ToString());
 		for (int i = PlayerData.Instance.shipData.Keys.Count - 1; i >= 0; i--) {
-			if (PlayerData.Instance.shipData[(SHIP_TYPE)i].unlocked) {
-				FirebaseAnalytics.SetUserProperty(UserProperty.bestShip, ((SHIP_TYPE)i).ToString());
+			if (PlayerData.Instance.shipData[i].unlocked) {
+				FirebaseAnalytics.SetUserProperty(UserProperty.bestShip, i.ToString());
 				break;
 			}
 		}
 		FirebaseAnalytics.SetUserProperty(UserProperty.gold, PlayerData.Instance.gold.ToString());
 		FirebaseAnalytics.SetUserProperty(UserProperty.controlStyle, PlayerSettingData.Instance.controlStyle.ToString());
 	}
+
+#endregion;
 }
 
 public class FirebaseEvent {

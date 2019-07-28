@@ -54,24 +54,9 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 		GameEventManager.Instance.BossAppear += OnBossFinishAppear;
 		GameManager.Instance.OnTimeChange += ShowTime;
 		shipImage.sprite = GameManager.Instance.player1.myRender.sprite;
-		if (DailyQuestManager.Instance.status == DAILY_QUEST_STATUS.ACTIVE)
-			GlobalEventManager.Instance.playerGetDailyItem += HandlePlayerGetDailyItem;
+		
 	}
-
-	public void ShowDailyQuestTracker () {
-		if (DailyQuestManager.Instance.status == DAILY_QUEST_STATUS.ACTIVE) {
-			dailyQuest.SetActive(true);
-			dailyImage.sprite = DailyQuestManager.Instance.todaySprite;
-			HandlePlayerGetDailyItem();
-		}
-	}
-
-	void HandlePlayerGetDailyItem () {
-		if (DailyQuestManager.Instance.status == DAILY_QUEST_STATUS.COMPLETED)
-			dailyText.color = Color.green;
-		dailyText.text = string.Format("{0}/{1}", DailyQuestManager.Instance.collected, DailyQuestManager.Instance.objective);
-	}
-
+    
 	void HandlePlayerGetCoin (Player p, Coin c) {
 		gold.text = GameManager.Instance.coin.ToString();
 	}
@@ -121,6 +106,6 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 	}
 
 	void OnDestroy () {
-		GlobalEventManager.Instance.playerGetDailyItem -= HandlePlayerGetDailyItem;
+		
 	}
 }
