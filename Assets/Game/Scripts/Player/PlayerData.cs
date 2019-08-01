@@ -4,23 +4,16 @@ using UnityEngine;
 
 public class ShipUpgradeData {
 
-	public int damageLv;
-	public int hpLv;
-	public int hpLimitLv;
-	public int magnetLv;
+	public int powerLevel;
+	public int skillLevel;
+	public int rankLevel;
 	public bool unlocked;
 
 	public ShipUpgradeData(){
-		damageLv = 0;
-		hpLv = 0;
-		hpLimitLv = 0;
-		magnetLv = 0;
+		powerLevel = 0;
+		skillLevel = 0;
+		rankLevel = 0;
 		unlocked = false;
-	}
-
-	public override string ToString () {
-		return string.Format(
-			"damage level: {0}\nhp level: {1}\nmax hp level: {2}\nmagnet level: {3}", new object[]{damageLv, hpLv, hpLimitLv, magnetLv});
 	}
 }
 

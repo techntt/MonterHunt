@@ -16,8 +16,8 @@ namespace UpgradeUI {
 			if (data.unlocked) {
 				if (Lock != null)
 					Lock.enabled = false;
-				shipHealth.text = "" + (1 + data.hpLv);
-				ship.color = GameManager.GetColorByHP(data.hpLv + 1, 60);
+				shipHealth.text = "" + 1;
+				ship.color = GameManager.GetColorByHP(1, 60);
 				notice.enabled = false;
 			} else {
 				if (Lock != null)

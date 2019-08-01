@@ -6,12 +6,10 @@ public class ShipContainer : SingletonMonoBehaviour<ShipContainer> {
 	public Player[] ship;
 	Player currentShip;
 
-	public void ShowShip (int type) {
+	public void ShowShip (int id) {
 		if (currentShip != null)
 			currentShip.gameObject.SetActive(false);
-		currentShip = ship[(int)type];
+		currentShip = ship[id];
 		currentShip.gameObject.SetActive(true);
-		currentShip.SetColor(GameManager.GetColorByHP(1 + PlayerData.Instance.shipData[type].hpLv, 60));
-		currentShip.healthText.text = "" + (1 + PlayerData.Instance.shipData[type].hpLv);
 	}
 }

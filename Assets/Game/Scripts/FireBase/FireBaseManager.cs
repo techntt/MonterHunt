@@ -73,10 +73,9 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 			new Parameter("level", CampaignManager.campaign.id.ToString()),
 			new Parameter("tryTime", PlayerData.Instance.retryTimes.ToString()),
 			new Parameter("ship", PlayerData.Instance.selectedShip.ToString()),
-			new Parameter("damage", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].damageLv.ToString()),
-			new Parameter("hp", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].hpLv.ToString()),
-			new Parameter("maxHp", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].hpLimitLv.ToString()),
-			new Parameter("magnet", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].magnetLv.ToString()),
+			new Parameter("power", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].powerLevel.ToString()),
+			new Parameter("skill", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].skillLevel.ToString()),
+			new Parameter("rank", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].rankLevel.ToString()),
 		};
         FirebaseAnalytics.LogEvent(FirebaseEvent.campaignStart, p);
 	}
@@ -91,10 +90,9 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 			new Parameter("progressPercent", (GameManager.Instance.score / (float)CampaignManager.campaign.objective).ToString("P0")),
 			new Parameter ("result", GameManager.Instance.gameResult.ToString()),
 			new Parameter("ship", PlayerData.Instance.selectedShip.ToString()),
-			new Parameter("damage", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].damageLv.ToString()),
-			new Parameter("hp", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].hpLv.ToString()),
-			new Parameter("maxHp", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].hpLimitLv.ToString()),
-			new Parameter("magnet", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].magnetLv.ToString()),
+			new Parameter("power", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].powerLevel.ToString()),
+			new Parameter("skill", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].skillLevel.ToString()),
+			new Parameter("rank", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].rankLevel.ToString()),
 		};
         FirebaseAnalytics.LogEvent(FirebaseEvent.campaignEnd, p);
 	}
@@ -136,10 +134,9 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 			new Parameter("amount", amount),
 			new Parameter("source", source),
 			new Parameter("ship", PlayerData.Instance.selectedShip.ToString()),
-			new Parameter("damage", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].damageLv.ToString()),
-			new Parameter("hp", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].hpLv.ToString()),
-			new Parameter("maxHp", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].hpLimitLv.ToString()),
-			new Parameter("magnet", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].magnetLv.ToString()),
+			new Parameter("power", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].powerLevel.ToString()),
+			new Parameter("skill", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].skillLevel.ToString()),
+			new Parameter("rank", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].rankLevel.ToString()),
 		};
         FirebaseAnalytics.LogEvent(FirebaseEvent.currencyChanged, p);
 	}

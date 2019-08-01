@@ -65,6 +65,9 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 				state = HOME_STATE.NO_POPUP;
 			}
 		}
+
+        if (Input.GetKey(KeyCode.T))
+            PlayerData.Instance.gold += 10;
 	}
 
 	void InitUI () {
@@ -77,7 +80,7 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
         
 		PlayerData_Instance_OnGoldChange(0);
 		PlayerData_Instance_OnRankChange(0);
-		UpdateShip();
+		ShipContainer.Instance.ShowShip(PlayerData.Instance.selectedShip);
 		PlayerData.Instance.OnGoldChange += PlayerData_Instance_OnGoldChange;
 		PlayerData.Instance.OnRankChange += PlayerData_Instance_OnRankChange;
 		// get information of current campaign		
@@ -116,69 +119,13 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 	void PlayerData_Instance_OnRankChange (int rank) {
 		rankText.text = "" + PlayerData.Instance.rank;
 	}
-
-	void UpdateShip () {
-		ShipContainer.Instance.ShowShip(PlayerData.Instance.selectedShip);
-	}
-
-	public void SelectNextShip () {
-		SoundManager.Instance.PlayUIButtonClick();
-		int current = availableShip.IndexOf(PlayerData.Instance.selectedShip);
-		if (current == availableShip.Count - 1)
-			SelectShip(availableShip[0]);
-		else
-			SelectShip(availableShip[current + 1]);
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "next_ship");
-	}
-
-	public void SelectPrevShip () {
-		SoundManager.Instance.PlayUIButtonClick();
-		int current = availableShip.IndexOf(PlayerData.Instance.selectedShip);
-		if (current == 0)
-			SelectShip(availableShip[availableShip.Count - 1]);
-		else
-			SelectShip(availableShip[current - 1]);
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "prev_ship");
-	}
-
-	void SelectShip (int type) {
-		PlayerData.Instance.selectedShip = type;
-		UpdateShip();
-	}
-
-	public void UpgradeShip () {
-		SoundManager.Instance.PlayUIButtonClick();
-		SceneManager.LoadScene(Const.SCENE_UPGRADE);
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "upgrade");
-	}
-
+    
 	public void PlayGame () {
 		SoundManager.Instance.PlayUIButtonClick();
 		SceneManager.LoadScene(Const.SCENE_GAME);
 		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "play");
 	}
-
-	public void Shop () {
-		SoundManager.Instance.PlayUIButtonClick();
-		SceneManager.LoadScene(Const.SCENE_SHOP);
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "shop");
-	}
-
-	public void Quest () {
-		SoundManager.Instance.PlayUIButtonClick();
-		questNotice.enabled = false;
-		QuestPopup.Instance.Show();
-		state = HOME_STATE.POPUP;
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "quest");
-	}
-
-	public void Setting () {
-		SoundManager.Instance.PlayUIButtonClick();
-		SettingPopup.Instance.Show();
-		state = HOME_STATE.POPUP;
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "setting");
-	}
-
+    
 	void OnDestroy () {
 		PlayerData.Instance.OnGoldChange -= PlayerData_Instance_OnGoldChange;
 		PlayerData.Instance.OnRankChange -= PlayerData_Instance_OnRankChange;

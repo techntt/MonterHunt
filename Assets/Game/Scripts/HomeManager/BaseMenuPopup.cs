@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseMenuPopup : MonoBehaviour
+public class BaseMenuPopup : SingletonMonoBehaviour<BaseMenuPopup>
 {
     public RectTransform mTrans;
     public virtual void Show() { }

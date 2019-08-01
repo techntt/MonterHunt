@@ -29,6 +29,14 @@ public class ShipDataManager : SingletonMonoBehaviour<ShipDataManager> {
             data[i].campaignPassed = int.Parse(temp[i]["campaign"]);
             data[i].baseDamage = float.Parse(temp[i]["damage"]);
             data[i].crystal = int.Parse(temp[i]["crystal"]);
+            string strSpeed = temp[i]["speed"];
+            string[] speedData = strSpeed.Trim().Split(new char[] { '_' });
+            data[i].minSpeed = float.Parse(speedData[0].Trim());
+            data[i].maxSpeed = float.Parse(speedData[1].Trim());
+            string strSkill = temp[i]["special"];
+            string[] skillData = strSkill.Split(new char[] {'_'});
+            data[i].baseSkillDamage = float.Parse(skillData[0].Trim());
+            data[i].timeDelay = float.Parse(skillData[1].Trim());
             // add data to dictionary
             shipData.Add(data[i].id, data[i]);
         }

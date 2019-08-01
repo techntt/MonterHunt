@@ -36,37 +36,13 @@ namespace UpgradeUI {
 			if (s.unlocked) {
 				switch (type) {
 					case UpgradeType.Damage:
-						if (s.damageLv == UpgradeManager.maxDamageUpgradeTime)
+						if (s.powerLevel == UpgradeManager.maxDamageUpgradeTime)
 							upgradeButton.gameObject.SetActive(false);
 						else
 							upgradeButton.gameObject.SetActive(true);
-						upgradeText.text = "+ " + s.damageLv * 10 + "%";
-						goldRequired = UpgradeManager.GetUpgradeDamageCost(UpgradeManager.Instance.currentShip, s.damageLv);
-						break;
-					case UpgradeType.Health:
-						if (s.hpLv == UpgradeManager.maxHPUpgradeTime)
-							upgradeButton.gameObject.SetActive(false);
-						else
-							upgradeButton.gameObject.SetActive(true);
-						upgradeText.text = "+ " + s.hpLv;
-						goldRequired = UpgradeManager.GetUpgradeHPCost(UpgradeManager.Instance.currentShip, s.hpLv);
-						break;
-					case UpgradeType.MaxHealth:
-						if (s.hpLimitLv == UpgradeManager.maxHPLimitUpgradeTime)
-							upgradeButton.gameObject.SetActive(false);
-						else
-							upgradeButton.gameObject.SetActive(true);
-						upgradeText.text = "+ " + s.hpLimitLv;
-						goldRequired = UpgradeManager.GetUpgradeMaxHPCost(UpgradeManager.Instance.currentShip, s.hpLimitLv);
-						break;
-					case UpgradeType.Magnet:
-						if (s.magnetLv == UpgradeManager.maxMagnetUpgradeTime)
-							upgradeButton.gameObject.SetActive(false);
-						else
-							upgradeButton.gameObject.SetActive(true);
-						upgradeText.text = "+ " + s.magnetLv;
-						goldRequired = UpgradeManager.GetUpgradeMagnetCost(UpgradeManager.Instance.currentShip, s.magnetLv);
-						break;
+						upgradeText.text = "+ " + s.powerLevel * 10 + "%";
+						goldRequired = UpgradeManager.GetUpgradeDamageCost(UpgradeManager.Instance.currentShip, s.powerLevel);
+						break;					
 				}
 				if (rankRequired > PlayerData.Instance.rank) {
 					rank.SetActive(true);
@@ -95,17 +71,8 @@ namespace UpgradeUI {
 			if (PlayerData.Instance.gold >= goldRequired && PlayerData.Instance.rank >= rankRequired) {
 				switch (type) {
 					case UpgradeType.Damage:
-						PlayerData.Instance.shipData[UpgradeManager.Instance.currentShip].damageLv++;
-						break;
-					case UpgradeType.Health:
-						PlayerData.Instance.shipData[UpgradeManager.Instance.currentShip].hpLv++;
-						break;
-					case UpgradeType.MaxHealth:
-						PlayerData.Instance.shipData[UpgradeManager.Instance.currentShip].hpLimitLv++;
-						break;
-					case UpgradeType.Magnet:
-						PlayerData.Instance.shipData[UpgradeManager.Instance.currentShip].magnetLv++;
-						break;
+						PlayerData.Instance.shipData[UpgradeManager.Instance.currentShip].powerLevel++;
+						break;					
 				}
 				PlayerData.Instance.gold -= goldRequired;
 				GlobalEventManager.Instance.OnCurrencyChanged("gold", "spend", goldRequired.ToString());

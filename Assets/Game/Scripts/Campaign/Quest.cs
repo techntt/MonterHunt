@@ -171,7 +171,7 @@ public class Quest {
 				break;
 			case QUEST_TYPE.MAX_HP:
 				if (PopupManager.Instance.scene == SCENE.GAME) {
-					referValue = 40 + PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].hpLimitLv;
+					
 					GameEventManager.Instance.PlayerGainHealth += CheckIfPlayerGetMaxHealth;
 				}
 				break;

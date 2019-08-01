@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 			_xdam = value;
 			if (xDamageChange != null)
 				xDamageChange();
-			int percent = (int)(_xdam * 100 + myShipUpgradeData.damageLv * 10);
+			int percent = (int)(_xdam * 100 + myShipUpgradeData.powerLevel * 10);
 			if (percent == 0)
 				bulletColor = Color.white;
 			else
@@ -103,17 +103,15 @@ public class Player : MonoBehaviour {
 			myShipData = ShipDataManager.Instance.shipData[type];
 			myShipUpgradeData = PlayerData.Instance.shipData[type];
 			// add bonus damage from upgrade
-			baseDamage = myShipData.baseDamage * (1 + 0.1f * PlayerData.Instance.shipData[type].damageLv + xDamage);
+			baseDamage = myShipData.baseDamage * (1 + 0.1f * PlayerData.Instance.shipData[type].powerLevel + xDamage);
 			xDamage = 0;
 			xPoint = 1;
 			shipXPoint = CampaignManager.campaign.id + 1;
-			maxHealth = 40 + myShipUpgradeData.hpLimitLv;
+			maxHealth = 40 ;
 			//add bonus health from upgrade
-			health = 1 + myShipUpgradeData.hpLv;
+			health = 1 + myShipUpgradeData.skillLevel;
 
-			// set magnet field radius
-			if (myShipUpgradeData.magnetLv > 0)
-				magnetRadius = 1 + (myShipUpgradeData.magnetLv - 1) * 0.25f;
+			// set magnet field radius			
 			magnetField.radius = magnetRadius;
 
 			WeaponManager.Instance.weaponList.Add(myBaseWeapon.weaponType, myBaseWeapon);
@@ -126,10 +124,10 @@ public class Player : MonoBehaviour {
 		// set xDamage variable to automatically set color of bullet
 		xDamage = 0;
 		// add bonus damage from upgrade
-		baseDamage = myShipData.baseDamage * (1 + 0.1f * PlayerData.Instance.shipData[type].damageLv + xDamage);
-		maxHealth = 40 + myShipUpgradeData.hpLimitLv;
+		baseDamage = myShipData.baseDamage * (1 + 0.1f * PlayerData.Instance.shipData[type].powerLevel + xDamage);
+		maxHealth = 40;
 		//add bonus health from upgrade
-		health = 1 + myShipUpgradeData.hpLv;
+		health = 1;
 	}
 
 	void HandlePlayerGetBonus (Player p, BonusType b, int variant) {

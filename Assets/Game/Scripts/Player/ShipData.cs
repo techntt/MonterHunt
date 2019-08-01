@@ -6,6 +6,8 @@ using UnityEngine;
 public class ShipData {	
     public int id;
 	public string shipName;
+    public Sprite[] bulletImg;
+    public Sprite skillImg;
 	public int campaignPassed;
     public float baseDamage;
     public int crystal;

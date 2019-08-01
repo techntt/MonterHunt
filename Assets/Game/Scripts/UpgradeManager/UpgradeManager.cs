@@ -116,7 +116,7 @@ namespace UpgradeUI {
 			// modify ship's data before showing it
 			displayedShip.UpdateStat(ship);
 			if (isDemoHp) {
-				displayedShip.health = 1 + currentShipData.hpLv;
+				displayedShip.health = 1;
 			} else {
 				displayedShip.health = displayedShip.maxHealth;
 			}
