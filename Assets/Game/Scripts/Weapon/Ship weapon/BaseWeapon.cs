@@ -32,11 +32,11 @@ public class BaseWeapon : Weapon, ShipBaseWeapon {
 		firePos = myPlayer.firePos;
 		if (PopupManager.Instance.scene == SCENE.GAME) {
 			myPlayer.xDamageChange += HandleXDamageChange;
-			GameEventManager.Instance.PlayerHealthChanged += HandleHealthChange;
+			GameEventManager.Instance.PlayerPowerChanged += HandlePowerChange;
 		}
 	}
 
-	void HandleHealthChange (Player p, float hpChange) {
+	void HandlePowerChange (Player p, float powerChange) {
 		GetWeaponData(p.power);
 		if (WeaponDataChanged != null)
 			WeaponDataChanged();

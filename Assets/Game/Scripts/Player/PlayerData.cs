@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ShipUpgradeData {
 
-	public int powerLevel;
-	public int skillLevel;
+    public const int maxUpdatePowerLevel = 50;
+    public const int maxUpdateRankLevel = 5;
+
+
+    public int powerLevel;
 	public int rankLevel;
 	public bool unlocked;
 
 	public ShipUpgradeData(){
 		powerLevel = 0;
-		skillLevel = 0;
 		rankLevel = 0;
 		unlocked = false;
 	}
@@ -20,7 +22,10 @@ public class ShipUpgradeData {
 public class PlayerData : Singleton<PlayerData> {
 
 	public int selectedShip;
-	private int _gold;
+    public delegate void GoldEvent(int gold);
+    public event GoldEvent OnGoldChange;
+    public event GoldEvent OnCrystalChange;
+    private int _gold;
 	public int gold {
 		get { 
 			return _gold;
@@ -31,21 +36,20 @@ public class PlayerData : Singleton<PlayerData> {
 				OnGoldChange(_gold);
 		}
 	}
-	public delegate void GoldEvent (int gold);
-	public event GoldEvent OnGoldChange;
+	
 
-	private int _rank;
-	public int rank {
+    private int _crystal;
+	public int crystal {
 		get { 
-			return _rank;
+			return _crystal;
 		}
 		set { 
-			_rank = value;
-			if (OnRankChange != null)
-				OnRankChange(_rank);
+			_crystal = value;
+			if (OnCrystalChange != null)
+                OnCrystalChange(_crystal);
 		}
 	}
-	public event GoldEvent OnRankChange;
+	
 
 	public SortedList<int, ShipUpgradeData> shipData;
 
@@ -59,13 +63,12 @@ public class PlayerData : Singleton<PlayerData> {
 	public PlayerData () {
 		selectedShip = PlayerPrefs.GetInt(Const.SELECTED_SHIP, 0);
 		gold = PlayerPrefs.GetInt(Const.GOLD, 0);
-		rank = PlayerPrefs.GetInt(Const.RANK, 0);
+		crystal = PlayerPrefs.GetInt(Const.CRYSTAL, 0);
 
 		currentMission = PlayerPrefs.GetInt(Const.MISSION, 0);
 		retryTimes = PlayerPrefs.GetInt(Const.RETRY, 0);
 		bestScore = PlayerPrefs.GetInt(Const.BEST_SCORE, 0);
 		shipData = new SortedList<int, ShipUpgradeData>();
-        Debug.Log("Ship number: "+ ShipDataManager.Instance.shipData.Count);
 		for (int i = 0; i < ShipDataManager.Instance.shipData.Count; i++) {
 			string result = PlayerPrefs.GetString((i).ToString(), "");
 			ShipUpgradeData sud = null;
@@ -81,7 +84,7 @@ public class PlayerData : Singleton<PlayerData> {
 	public void SaveAllData () {
 		PlayerPrefs.SetInt(Const.SELECTED_SHIP, (int)selectedShip);
 		PlayerPrefs.SetInt(Const.GOLD, gold);
-		PlayerPrefs.SetInt(Const.RANK, rank);
+		PlayerPrefs.SetInt(Const.CRYSTAL, crystal);
 		PlayerPrefs.SetInt(Const.MISSION, currentMission);
 		PlayerPrefs.SetInt(Const.RETRY, retryTimes);
 		PlayerPrefs.SetInt(Const.BEST_SCORE, bestScore);

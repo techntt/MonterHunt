@@ -76,7 +76,7 @@ public class QuestManager {
 		for (int i = currentQuests.Count - 1; i >= 0; i--) {
 			if (currentQuests[i].currentValue >= currentQuests[i].value) {
 				// claim quest reward
-				PlayerData.Instance.rank++;
+				PlayerData.Instance.crystal++;
 				foreach (string s in currentQuests[i].reward.Keys) {
 					if (s == "gold") {
 						PlayerData.Instance.gold += currentQuests[i].reward[s];

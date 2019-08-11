@@ -1,0 +1,1045 @@
+fileFormatVersion: 2
+guid: 82ce81ccb647cdc46aa4f396620655ca
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: CharacterAtlas_0
+    21300002: CharacterAtlas_1
+    21300004: CharacterAtlas_2
+    21300006: CharacterAtlas_3
+    21300008: CharacterAtlas_4
+    21300010: CharacterAtlas_5
+    21300012: CharacterAtlas_6
+    21300014: CharacterAtlas_7
+    21300016: CharacterAtlas_8
+    21300018: CharacterAtlas_9
+    21300020: CharacterAtlas_10
+    21300022: CharacterAtlas_11
+    21300024: CharacterAtlas_12
+    21300026: CharacterAtlas_13
+    21300028: CharacterAtlas_14
+    21300030: CharacterAtlas_15
+    21300032: CharacterAtlas_17
+    21300034: CharacterAtlas_18
+    21300036: CharacterAtlas_19
+    21300038: CharacterAtlas_20
+    21300040: CharacterAtlas_21
+    21300042: CharacterAtlas_22
+    21300044: CharacterAtlas_23
+    21300046: CharacterAtlas_24
+    21300048: CharacterAtlas_25
+    21300050: CharacterAtlas_26
+    21300052: CharacterAtlas_27
+    21300054: CharacterAtlas_28
+    21300056: CharacterAtlas_29
+    21300058: CharacterAtlas_30
+    21300060: CharacterAtlas_31
+    21300062: CharacterAtlas_32
+    21300064: CharacterAtlas_33
+    21300066: CharacterAtlas_34
+    21300068: CharacterAtlas_35
+    21300070: CharacterAtlas_36
+    21300072: CharacterAtlas_37
+    21300074: CharacterAtlas_38
+    21300076: CharacterAtlas_39
+    21300078: CharacterAtlas_40
+    21300080: CharacterAtlas_41
+    21300082: CharacterAtlas_16
+    21300084: CharacterAtlas_42
+    21300086: CharacterAtlas_43
+  externalObjects: {}
+  serializedVersion: 9
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CharacterAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 371
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1e2de2bbf76d5e4bace511e45bd6752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_1
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 355
+        width: 13
+        height: 24
+      alignment: 9
+      pivot: {x: 0.6657788, y: 0.08693568}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b46cd3cf30be3c448c2c90551c11887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_2
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 253
+        width: 12
+        height: 25
+      alignment: 9
+      pivot: {x: 0.7155126, y: 0.15518188}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9bc4d3035b848044a916cfee15766d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 343
+        width: 19
+        height: 24
+      alignment: 9
+      pivot: {x: 0.31437522, y: 0.85688525}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f81b5a931a4e1b645b1cbf12728c0101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 308
+        width: 17
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a48ecf641ac77ef4cb97ab49950f0f28
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 308
+        width: 18
+        height: 24
+      alignment: 9
+      pivot: {x: 0.67610675, y: 0.8456561}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b94aa25716548849b92883f2629443a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_6
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 308
+        width: 13
+        height: 26
+      alignment: 9
+      pivot: {x: 0.7320903, y: 0.05239868}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0114f54ab0eb234b86e7edb8aea0f04
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 253
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abf2a7e519233974ea2c3d136c57ee80
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 284
+        width: 27
+        height: 20
+      alignment: 9
+      pivot: {x: 0.8461332, y: 0.22387847}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b26f8a5269e5c954ea0a1c20c26cd7c5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 281
+        width: 18
+        height: 24
+      alignment: 9
+      pivot: {x: 0.36004448, y: 0.86503476}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f73f0e5a03dd2f84aa505a9965f99011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_10
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 285
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b91e0f9f73fbe946ae9d122791ed029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_11
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 253
+        width: 17
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5499761, y: 0.88231915}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81db079acaf4a0b4bb9ff069de52c8ad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 257
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d7f7a57aa827884f811ff6b5aa43dc3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_13
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 257
+        width: 27
+        height: 20
+      alignment: 9
+      pivot: {x: 0.23253208, y: 0.26635742}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae3d6ba95f6421d4db53d379975f8c80
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_14
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 253
+        width: 18
+        height: 24
+      alignment: 9
+      pivot: {x: 0.6158973, y: 0.8476906}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6ccc520e041d9343b526b3c5731f5ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 232
+        width: 38
+        height: 22
+      alignment: 9
+      pivot: {x: 0.47907197, y: 0.13851513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a93d2b25c8e27c47a7a4d2096f330de
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_17
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 225
+        width: 27
+        height: 24
+      alignment: 9
+      pivot: {x: 0.82605577, y: 0.17248853}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e983769ab42627438e3e9de5e59a774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_18
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 226
+        width: 26
+        height: 23
+      alignment: 9
+      pivot: {x: 0.1631309, y: 0.17191878}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f53555c86f86ac847be55d4c857adc13
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_19
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 226
+        width: 26
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be954d6fc7537994daeff7e33e480ac5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_20
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 174
+        width: 28
+        height: 57
+      alignment: 9
+      pivot: {x: 0.5, y: 0.9657657}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c5737a024485e74ab92767047f02b68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_21
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 223
+        width: 23
+        height: 26
+      alignment: 9
+      pivot: {x: 0.6834876, y: 0.9057881}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc2cc9056ddc5c240ae3b9ded79ae44f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_22
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 194
+        width: 38
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f2b124652e79c44f95e924b80c942a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_23
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 194
+        width: 27
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6ff590e9270e7042bb145080d4cef3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_24
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 194
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45fc786e4b6e78f4d90d57013e7ded1e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_25
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 176
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c26eac582e725d14b99ed6a74722f717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_26
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 193
+        width: 23
+        height: 26
+      alignment: 9
+      pivot: {x: 0.33486342, y: 0.87332505}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb3853a0e76543f48b86d15b35159fc2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 143
+        width: 48
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 457097f259706104d82f6f790fa09d07
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_28
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 132
+        width: 63
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44d051a34a0ce5e4d9d8709d9741d92d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_29
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 137
+        width: 27
+        height: 35
+      alignment: 9
+      pivot: {x: 0.6149897, y: 0.105752565}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6aef42c10b0bee49a7cbcce379abbbe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_30
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 137
+        width: 29
+        height: 35
+      alignment: 9
+      pivot: {x: 0.46550447, y: 0.07618408}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 971a2e5b9947ff442b99d513500946bf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_31
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 165
+        width: 27
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a76bb8d724a455b43b9954c8e0f5daea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 68
+        width: 57
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3012e0d35f95f234887742f3b68f8ce1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_33
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 136
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e73e2c15dc87f49429bac758ee0ce145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_34
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 77
+        width: 63
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 951d89ed1b27e0549972ef4e90c2932e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_35
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 96
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23c959ebed113ef4aae46aa30fe694c1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_36
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 72
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd2a451c04d835149a9fcc1aff8be556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_37
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 1
+        width: 61
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac44e677908d21c40952c36a6297f550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_38
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 0
+        width: 59
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ae6024ea829452459465ae4a17712b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_39
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 59
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5743213edc456a54b98ce0272fc7025d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_40
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 0
+        width: 26
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 626b49b17c35e024fb89850a3b32af08
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_41
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 78
+        width: 71
+        height: 53
+      alignment: 9
+      pivot: {x: 0.47306728, y: 0.1752816}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a68967e4fda1bbe4ea2e7e33ef02ec66
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 394
+        width: 13
+        height: 26
+      alignment: 9
+      pivot: {x: 0.57286936, y: 0.06278053}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d22d305eab670004b9b4b20510c61542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_42
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 337
+        width: 25
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55121e69e5ccfb40a60df89aa197c99
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterAtlas_43
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 422
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fc65f664e05a9443b8f241e487551c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 9a57d7dda2ec00c4ebe6515a68a194fb
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

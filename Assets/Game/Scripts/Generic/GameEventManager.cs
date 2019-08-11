@@ -28,7 +28,7 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 	public delegate void PlayerHealthEvent (Player p, float hpChange);
 	public event PlayerHealthEvent PlayerGainHealth;
 	public event PlayerHealthEvent PlayerLostHealth;
-	public event PlayerHealthEvent PlayerHealthChanged;
+	public event PlayerHealthEvent PlayerPowerChanged;
 
 	public delegate void PlayerIntEvent (Player p, int value);
 	public event PlayerIntEvent PlayerDealDamage;
@@ -131,9 +131,9 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 			PlayerLostHealth(p, hpLost);
 	}
 
-	public void OnPlayerHealthChanged (Player p, float newHp) {
-		if (PlayerHealthChanged != null)
-			PlayerHealthChanged(p, newHp);
+	public void OnPlayerPowerChanged (Player p, float newHp) {
+		if (PlayerPowerChanged != null)
+            PlayerPowerChanged(p, newHp);
 	}
 
 	public void OnPlayerDealDamage (Player p, int damage) {
@@ -174,7 +174,7 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 		PlayerGetBonus = null;
 		PlayerGainHealth = null;
 		PlayerLostHealth = null;
-		PlayerHealthChanged = null;
+		PlayerPowerChanged = null;
 		PlayerDealDamage = null;
 		PlayerGetScore = null;
 		GamePhaseChanged = null;

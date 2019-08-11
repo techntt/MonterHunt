@@ -44,7 +44,6 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 	/// </summary>
 	public void UpgradeShip () {
 		TutorialPopup.Instance.Init(pData[4], true);
-		UpgradeUI.UpgradeManager.Instance.upgradePanel.transform.SetAsLastSibling();
 	}
 }
 

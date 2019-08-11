@@ -25,7 +25,7 @@ public class Const : MonoBehaviour {
 	// Player Pref keys
 	public const string SELECTED_SHIP = "selected_ship";
 	public const string GOLD = "gold";
-	public const string RANK = "rank";
+	public const string CRYSTAL = "crystal";
 	public const string MISSION = "mission";
 	public const string RETRY = "retry";
 	public const string BEST_SCORE = "best_score";

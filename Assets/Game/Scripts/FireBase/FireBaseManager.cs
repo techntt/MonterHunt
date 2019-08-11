@@ -74,7 +74,6 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 			new Parameter("tryTime", PlayerData.Instance.retryTimes.ToString()),
 			new Parameter("ship", PlayerData.Instance.selectedShip.ToString()),
 			new Parameter("power", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].powerLevel.ToString()),
-			new Parameter("skill", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].skillLevel.ToString()),
 			new Parameter("rank", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].rankLevel.ToString()),
 		};
         FirebaseAnalytics.LogEvent(FirebaseEvent.campaignStart, p);
@@ -91,7 +90,6 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 			new Parameter ("result", GameManager.Instance.gameResult.ToString()),
 			new Parameter("ship", PlayerData.Instance.selectedShip.ToString()),
 			new Parameter("power", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].powerLevel.ToString()),
-			new Parameter("skill", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].skillLevel.ToString()),
 			new Parameter("rank", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].rankLevel.ToString()),
 		};
         FirebaseAnalytics.LogEvent(FirebaseEvent.campaignEnd, p);
@@ -135,7 +133,6 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 			new Parameter("source", source),
 			new Parameter("ship", PlayerData.Instance.selectedShip.ToString()),
 			new Parameter("power", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].powerLevel.ToString()),
-			new Parameter("skill", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].skillLevel.ToString()),
 			new Parameter("rank", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].rankLevel.ToString()),
 		};
         FirebaseAnalytics.LogEvent(FirebaseEvent.currencyChanged, p);
@@ -181,7 +178,7 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
         if (!firebaseInitialized)
             return;
 		FirebaseAnalytics.SetUserProperty(UserProperty.currentMission, CampaignManager.campaign.id.ToString());
-		FirebaseAnalytics.SetUserProperty(UserProperty.rank, PlayerData.Instance.rank.ToString());
+		FirebaseAnalytics.SetUserProperty(UserProperty.crystal, PlayerData.Instance.crystal.ToString());
 		for (int i = PlayerData.Instance.shipData.Keys.Count - 1; i >= 0; i--) {
 			if (PlayerData.Instance.shipData[i].unlocked) {
 				FirebaseAnalytics.SetUserProperty(UserProperty.bestShip, i.ToString());
@@ -207,7 +204,7 @@ public class FirebaseEvent {
 
 public class UserProperty {
 	public const string currentMission = "current_mission";
-	public const string rank = "rank";
+	public const string crystal = "crystal";
 	public const string bestShip = "best_ship";
 	public const string gold = "gold";
 	public const string controlStyle = "control_style";

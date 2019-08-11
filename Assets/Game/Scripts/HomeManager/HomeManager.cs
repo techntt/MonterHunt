@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UpgradeUI;
 
 public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 	//----------new UI content--------------
@@ -66,9 +65,13 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 			}
 		}
 
-        if (Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.G))
             PlayerData.Instance.gold += 10;
-	}
+        if (Input.GetKey(KeyCode.C))
+            PlayerData.Instance.crystal += 10;
+        if (Input.GetKey(KeyCode.Delete))
+            PlayerPrefs.DeleteAll();
+    }
 
 	void InitUI () {
 		// get list of available ships
@@ -79,10 +82,10 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 		}
         
 		PlayerData_Instance_OnGoldChange(0);
-		PlayerData_Instance_OnRankChange(0);
+		PlayerData_Instance_OnCrystalChange(0);
 		ShipContainer.Instance.ShowShip(PlayerData.Instance.selectedShip);
 		PlayerData.Instance.OnGoldChange += PlayerData_Instance_OnGoldChange;
-		PlayerData.Instance.OnRankChange += PlayerData_Instance_OnRankChange;
+		PlayerData.Instance.OnCrystalChange += PlayerData_Instance_OnCrystalChange;
 		// get information of current campaign		
 		Campaign c = CampaignManager.campaign;
         if (c.id > 0)
@@ -105,7 +108,7 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 
 	public void UpgradeNotice () {
 		int gold = PlayerData.Instance.gold;
-		int rank = PlayerData.Instance.rank;
+		int crystal = PlayerData.Instance.crystal;
 		int id = PlayerData.Instance.selectedShip;
 		ShipUpgradeData data = PlayerData.Instance.shipData[id];
 		bool result = false;		
@@ -116,8 +119,8 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 		goldText.text = "" + PlayerData.Instance.gold;
 	}
 
-	void PlayerData_Instance_OnRankChange (int rank) {
-		rankText.text = "" + PlayerData.Instance.rank;
+	void PlayerData_Instance_OnCrystalChange (int crystal) {
+		rankText.text = "" + PlayerData.Instance.crystal;
 	}
     
 	public void PlayGame () {
@@ -128,7 +131,7 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
     
 	void OnDestroy () {
 		PlayerData.Instance.OnGoldChange -= PlayerData_Instance_OnGoldChange;
-		PlayerData.Instance.OnRankChange -= PlayerData_Instance_OnRankChange;
+		PlayerData.Instance.OnCrystalChange -= PlayerData_Instance_OnCrystalChange;
 		QuestManager.SaveQuest();
 		PlayerData.Instance.SaveAllData();
 	}

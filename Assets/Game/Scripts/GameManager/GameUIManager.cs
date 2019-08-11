@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
-
-	public Text health;
+public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {    
 	public Text score;
 	public Text gold;
 	public Text time;
@@ -33,7 +31,6 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 		centerText.text = "3";
 		SoundManager.Instance.PlaySfx(sfx_count);
 		yield return new WaitForSecondsRealtime(0.5f);
-		HandlePlayerHealthChanged(GameManager.Instance.player1, 0);
 		centerText.text = "2";
 		SoundManager.Instance.PlaySfx(sfx_count);
 		yield return new WaitForSecondsRealtime(0.5f);
@@ -49,7 +46,6 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 	void Start () {
 		GameEventManager.Instance.PlayerGetScore += HandlePlayerGetScore;
 		GameEventManager.Instance.PlayerGetCoin += HandlePlayerGetCoin;
-		GameEventManager.Instance.PlayerHealthChanged += HandlePlayerHealthChanged;
 		GameEventManager.Instance.GamePhaseChanged += HandleGamePhaseChanged;
 		GameEventManager.Instance.BossAppear += OnBossFinishAppear;
 		GameManager.Instance.OnTimeChange += ShowTime;
@@ -59,10 +55,6 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
     
 	void HandlePlayerGetCoin (Player p, Coin c) {
 		gold.text = GameManager.Instance.coin.ToString();
-	}
-
-	void HandlePlayerHealthChanged (Player p, float hpChange) {
-		health.text = p.health.ToString();
 	}
 
 	void OnBossFinishAppear () {

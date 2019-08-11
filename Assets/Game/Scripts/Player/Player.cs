@@ -6,7 +6,29 @@ using DG.Tweening;
 
 public class Player : MonoBehaviour {
 
-	[HideInInspector] public float baseDamage;
+    public Color bulletColor;
+    public float magnetRadius;
+
+    public delegate void StatEvent();
+    public event StatEvent xDamageChange;
+    public event StatEvent xPointChange;
+    public event StatEvent becomeVulnerable;
+
+    public Transform firePos;
+    public CircleCollider2D body;
+    public CircleCollider2D bonusBound;
+    public CircleCollider2D magnetField;
+    public SpriteRenderer myRender;
+    public Weapon myBaseWeapon;
+    public Sprite myBullet;
+    public ParticleSystem[] myPars;
+    public ShipData myShipData;
+    public ShipUpgradeData myShipUpgradeData;
+
+    public AudioClip sfxDie;
+    public AudioClip sfxImpact;
+
+    [HideInInspector] public float baseDamage;
 	private float _xdam;
 
 	public float xDamage {
@@ -45,6 +67,11 @@ public class Player : MonoBehaviour {
 		get { 
 			return _power;
 		}
+        set
+        {
+            _power = value;
+            GameEventManager.Instance.OnPlayerPowerChanged(this, _health);
+        }
 	}
 
 	public int maxHealth;
@@ -54,49 +81,17 @@ public class Player : MonoBehaviour {
 		set {
 			int change = _health;
 			_health = Mathf.Clamp(value, 0, maxHealth);
-			change = _health - change;
-			_power = _health;
-			if (peakHealth < _health)
-				peakHealth = _health;
-			SetColor(GameManager.GetColorByHP(_health, 60));
-			healthText.text = _health.ToString();
+			change = _health - change;	
 			if (change > 0)
 				GameEventManager.Instance.OnPlayerGainHealth(this, change);
 			else if (change < 0)
-				GameEventManager.Instance.OnPlayerLostHealth(this, change);
-			GameEventManager.Instance.OnPlayerHealthChanged(this, _health);
+				GameEventManager.Instance.OnPlayerLostHealth(this, change);			
 		}
 		get {
 			return _health;
 		}
 	}
-
-	public Color bulletColor;
-
-	public float magnetRadius;
-
-	public delegate void StatEvent ();
-
-	public event StatEvent xDamageChange;
-	public event StatEvent xPointChange;
-	public event StatEvent becomeVulnerable;
-
-	public Transform firePos;
-	public CircleCollider2D body;
-	public CircleCollider2D bonusBound;
-	public CircleCollider2D magnetField;
-	public Text healthText;
-	public SpriteRenderer myRender;
-	public Weapon myBaseWeapon;
-	public Sprite myBullet;
-	public ParticleSystem[] myPars;
-	public ShipData myShipData;
-	public ShipUpgradeData myShipUpgradeData;
-	int lastHealth, peakHealth;
-
-	public AudioClip sfxDie;
-	public AudioClip sfxImpact;
-
+    
 	void Start () {
 		if (PopupManager.Instance.scene == SCENE.GAME) {
 			int type = PlayerData.Instance.selectedShip;
@@ -107,13 +102,11 @@ public class Player : MonoBehaviour {
 			xDamage = 0;
 			xPoint = 1;
 			shipXPoint = CampaignManager.campaign.id + 1;
-			maxHealth = 40 ;
+			maxHealth = 1 ;
 			//add bonus health from upgrade
-			health = 1 + myShipUpgradeData.skillLevel;
-
+			health = 1;
 			// set magnet field radius			
 			magnetField.radius = magnetRadius;
-
 			WeaponManager.Instance.weaponList.Add(myBaseWeapon.weaponType, myBaseWeapon);
 			GameEventManager.Instance.PlayerGetBonus += HandlePlayerGetBonus;
 		}
@@ -125,15 +118,16 @@ public class Player : MonoBehaviour {
 		xDamage = 0;
 		// add bonus damage from upgrade
 		baseDamage = myShipData.baseDamage * (1 + 0.1f * PlayerData.Instance.shipData[type].powerLevel + xDamage);
-		maxHealth = 40;
+		maxHealth = 0;
 		//add bonus health from upgrade
 		health = 1;
 	}
 
 	void HandlePlayerGetBonus (Player p, BonusType b, int variant) {
 		if (b == BonusType.PowerUp)
-			health += 3;
-	}
+            if (power <= 50)
+                power += 1;
+    }
 
 	public void HandleCollision (Collider2D col) {
 		// if the collider is a part of boss
@@ -143,7 +137,7 @@ public class Player : MonoBehaviour {
 			// get the damageable class based on instanceID of collider
 			Damageable d = ColliderRef.Instance.GetDamageable(col.GetInstanceID());
 			// player take damage
-			TakeDamage(d.damage);
+			TakeDamage(1);
 			// if the col is a circle, fire event
 			if (d is Circle) {
 				Circle c = d as Circle;
@@ -164,8 +158,9 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 		#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		if (Input.GetKey(KeyCode.Space)) {
-			health++;
+		if (Input.GetKey(KeyCode.Space)) {            
+            if(power<=50)
+                power += 1;
 		}
 		if (Input.GetKey(KeyCode.S)) {
 			GameEventManager.Instance.OnPlayerGetScore(this, 1);
@@ -182,7 +177,6 @@ public class Player : MonoBehaviour {
 
 	public void TakeDamage (float damage) {
 		if (health > 0) {
-			lastHealth = health;
 			health -= Mathf.CeilToInt(damage);
 			if (health == 0) {
 				Explode();
@@ -196,24 +190,12 @@ public class Player : MonoBehaviour {
 
 	public void Revive () {
 		gameObject.SetActive(true);
-		if (lastHealth > 20)
-			health = lastHealth;
-		else {
-			health = Mathf.Min(20, peakHealth);
-		}
+        health = 1;
 		magnetField.radius = magnetRadius;
 		WeaponManager.Instance.ActivateWeapon(WeaponType.BASE_WEAPON);
 		GameEventManager.Instance.OnPlayerGetBonus(this, BonusType.Saw);
 	}
-
-	public void SetColor (Color c) {
-		myRender.color = c;
-		for (int i = 0; i < myPars.Length; i++) {
-			ParticleSystem.MainModule m = myPars[i].main;
-			m.startColor = c;
-		}
-	}
-
+    
 	void Explode () {
 		SoundManager.Instance.PlaySfx(sfxDie);
 		// spawn explosion effect
