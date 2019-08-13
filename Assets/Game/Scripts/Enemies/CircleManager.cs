@@ -8,6 +8,7 @@ public class CircleManager : SingletonMonoBehaviour<CircleManager> {
 	public Stack<Circle> pool = new Stack<Circle>();
     public Stack<SpecialObject> dummPool = new Stack<SpecialObject>();
 	public Sprite[] CircleSprite;
+    public float[] spriteRatio;
 	public ParticleSystem explodeEffect;
 	Stack<ParticleSystem> explodes = new Stack<ParticleSystem>();
 
@@ -38,7 +39,21 @@ public class CircleManager : SingletonMonoBehaviour<CircleManager> {
 		b.type = type;
 		b.size = size;
 		b.myCollider.radius = size/2;
-		b.myRender.size = new Vector2(size, size);
+        switch (type)
+        {
+            case CircleType.GLOW:
+                b.myRender.size = new Vector2(size * spriteRatio[0], size);
+                break;
+            case CircleType.BOMB:
+                b.myRender.size = new Vector2(size * spriteRatio[1], size);
+                break;
+            case CircleType.HARDEN:
+                b.myRender.size = new Vector2(size * spriteRatio[2], size);
+                break;
+            case CircleType.NORMAL:
+                b.myRender.size = new Vector2(size * spriteRatio[3], size);
+                break;
+        }		
 		b.myRender.sprite = CircleSprite[(int)type];
 		return b;
 	}

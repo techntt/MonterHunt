@@ -12,14 +12,14 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 	bool isEarlyGame = true;
 	public float h1Chance, h2Chance, h5Chance, h4Chance;
 	SortedList<int, HpChance> hpChances;
-	public float minSpeed = 1, maxSpeed = 4;
+	public float minSpeed = 1f, maxSpeed = 4f;
 	public float minDelayTime = 1, maxDelayTime = 0.3f;
 
 	public const float verySmallSize = 0.5f;
 	public const float veryLargeSize = 2;
 	public const int specialSizeChance = 5;
 	// test
-	public const float minSize = 0.5f, maxSize = 1.6f;
+	public const float minSize = 0.8f, maxSize = 1.5f;
 	public float bonusDropChance = 15;
 	public int specialCircleChance = 30;
 	public int minHardenChance, maxHardenChance;
@@ -54,25 +54,25 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 		phase2 = CampaignManager.campaign.phase2;
 		phase3 = CampaignManager.campaign.phase3;
 		spawnPos = new Vector3[] {
-			new Vector3(wallLeft.position.x - 1, 0), //0
-			new Vector3(wallLeft.position.x - 1, 1), //1
-			new Vector3(wallLeft.position.x - 1, 2), //2
-			new Vector3(wallLeft.position.x - 1, 3), //3
-			new Vector3(wallLeft.position.x - 1, 4), //4
-			new Vector3(wallLeft.position.x - 1, 5), //5
-			new Vector3(wallLeft.position.x - 1, 6), //6
-			new Vector3(wallLeft.position.x + 1, 6), //7
-			new Vector3(wallLeft.position.x + 2, 6), //8
-			new Vector3(0, 6), 					  //9
-			new Vector3(wallRight.position.x - 2, 6), //10
-			new Vector3(wallRight.position.x - 1, 6), //11
-			new Vector3(wallRight.position.x + 1, 6), //12
-			new Vector3(wallRight.position.x + 1, 5), //13
-			new Vector3(wallRight.position.x + 1, 4), //14
-			new Vector3(wallRight.position.x + 1, 3), //15
-			new Vector3(wallRight.position.x + 1, 2), //16
-			new Vector3(wallRight.position.x + 1, 1), //17
-			new Vector3(wallRight.position.x + 1, 0), //18
+			new Vector3(0, 0), //0
+			new Vector3(0, 1), //1
+			new Vector3(0, 2), //2
+			new Vector3(0, 3), //3
+			new Vector3(0, 4), //4
+			new Vector3(0, 5), //5
+			new Vector3(0, 6), //6
+			new Vector3(0, 6), //7
+			new Vector3(0, 6), //8
+			new Vector3(0, 6), //9
+			new Vector3(0, 6), //10
+			new Vector3(0, 6), //11
+			new Vector3(0, 6), //12
+			new Vector3(0, 5), //13
+			new Vector3(0, 4), //14
+			new Vector3(0, 3), //15
+			new Vector3(0, 2), //16
+			new Vector3(0, 1), //17
+			new Vector3(0, 0), //18
 		};
 		GameEventManager.Instance.GameStart += HandleOnGameStart;
 		GameEventManager.Instance.GameEnd += OnGameEnd;

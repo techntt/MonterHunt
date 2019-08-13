@@ -13,7 +13,7 @@ public class EnvironmentManager : MonoBehaviour {
 	void Start () {
 		int id = CampaignManager.campaign.bossID;
 		EnvironmentData e = environments[id];
-		background.color = e.bgColor;
+		//background.color = e.bgColor;
 		ParticleSystem.MainModule m = cloud.main;
 		m.startColor = e.cloudColor;
 		ParticleSystem.MainModule n = star.main;
