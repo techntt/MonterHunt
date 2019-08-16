@@ -7,19 +7,19 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 	public Transform wallLeft, wallRight;
 
 	// fixed parameters
-	public int maxHP;
+	public int minHP,maxHP;
 	public int h1, h2, h3, h4;
 	bool isEarlyGame = true;
 	public float h1Chance, h2Chance, h5Chance, h4Chance;
 	SortedList<int, HpChance> hpChances;
-	public float minSpeed = 1f, maxSpeed = 4f;
+	public float minSpeed = 0.5f, maxSpeed = 2f;
 	public float minDelayTime = 1, maxDelayTime = 0.3f;
 
-	public const float verySmallSize = 0.5f;
-	public const float veryLargeSize = 2;
+	public const float verySmallSize = 0.6f;
+	public const float veryLargeSize = 1.5f;
 	public const int specialSizeChance = 5;
 	// test
-	public const float minSize = 0.8f, maxSize = 1.5f;
+	public const float minSize = 0.8f, maxSize = 1.2f;
 	public float bonusDropChance = 15;
 	public int specialCircleChance = 30;
 	public int minHardenChance, maxHardenChance;
@@ -48,31 +48,35 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
     
 
 	void Awake () {
-		ReadDifficultyData();
+        Camera189.Instance.Init();
+        float top = Camera189.gameView.yMax + 1;
+        ReadDifficultyData();
 		hardenChance = minHardenChance;
 		phase1 = CampaignManager.campaign.phase1;
 		phase2 = CampaignManager.campaign.phase2;
 		phase3 = CampaignManager.campaign.phase3;
 		spawnPos = new Vector3[] {
-			new Vector3(0, 0), //0
-			new Vector3(0, 1), //1
-			new Vector3(0, 2), //2
-			new Vector3(0, 3), //3
-			new Vector3(0, 4), //4
-			new Vector3(0, 5), //5
-			new Vector3(0, 6), //6
-			new Vector3(0, 6), //7
-			new Vector3(0, 6), //8
-			new Vector3(0, 6), //9
-			new Vector3(0, 6), //10
-			new Vector3(0, 6), //11
-			new Vector3(0, 6), //12
-			new Vector3(0, 5), //13
-			new Vector3(0, 4), //14
-			new Vector3(0, 3), //15
-			new Vector3(0, 2), //16
-			new Vector3(0, 1), //17
-			new Vector3(0, 0), //18
+            new Vector3(-4.33f, 0), //0
+			new Vector3(-4.33f, 1), //1
+			new Vector3(-4.33f, 2), //2
+			new Vector3(-4.33f, 3), //3
+			new Vector3(-4.33f, 4), //4
+			new Vector3(-4.33f, 5), //5
+			new Vector3(-4.33f, 6), //6
+			new Vector3(-3, top), //7
+			new Vector3(-2, top), //8
+			new Vector3(-1, top), //8
+			new Vector3(0, top), //9
+			new Vector3(1, top), //10
+			new Vector3(2, top), //11
+			new Vector3(3, top), //12
+			new Vector3(4.33f, 6), //13
+			new Vector3(4.33f, 5), //14
+			new Vector3(4.33f, 4), //15
+			new Vector3(4.33f, 3), //16
+			new Vector3(4.33f, 2), //17
+			new Vector3(4.33f, 1), //18
+			new Vector3(4.33f, 0), //19
 		};
 		GameEventManager.Instance.GameStart += HandleOnGameStart;
 		GameEventManager.Instance.GameEnd += OnGameEnd;
@@ -123,8 +127,10 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 	void ReadDifficultyData () {
 		hpChances = new SortedList<int, HpChance>();
 		List<Dictionary<string, string>> data = CSVReader.ReadDataToList(DataManager.Instance.difficulty[CampaignManager.campaign.id]);
-		maxHP = int.Parse(data[0]["maxHp"]);
-		h1 = maxHP / 5;
+        
+        minHP = int.Parse(data[0]["minHp"]);
+        maxHP = int.Parse(data[0]["maxHp"]);
+		h1 = (maxHP-minHP) / 5;
 		h4 = maxHP - h1;
 		h3 = h4 - h1;
 		h2 = h3 - h1;
@@ -272,11 +278,11 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 
 	public int GetRandomHP () {
 		if (isEarlyGame) {
-			return Random.Range(1, h1 / 2 + 1);
+			return Random.Range(minHP, h1 / 2 + 1);
 		} else {
 			int c = Random.Range(0, 100);
 			if (c < h1Chance) {
-				return Random.Range(1, h1 + 1);
+				return Random.Range(minHP, h1 + 1);
 			} else if (c < h1Chance + h5Chance) {
 				return Random.Range(h4, maxHP + 1);
 			} else if (c < h1Chance + h5Chance + h2Chance) {
@@ -299,22 +305,23 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 	}
 
 	public Vector3 GetRandomPosition (CircleOrbit orbit) {
-		Vector3 pos = Vector3.zero;
-		switch (orbit) {
-			case CircleOrbit.D:
-			case CircleOrbit.ZL:
-			case CircleOrbit.ZR:
-				pos = spawnPos[Random.Range(7, 12)];
-				break;
-			case CircleOrbit.L:
-				pos = spawnPos[Random.Range(0, 9)];
-				break;
-			case CircleOrbit.R:
-				pos = spawnPos[Random.Range(10, 19)];
-				break;
-		}
-		return pos;
-	}
+        Vector3 pos = Vector3.zero;
+        switch (orbit)
+        {
+            case CircleOrbit.D:
+            case CircleOrbit.ZL:
+            case CircleOrbit.ZR:
+                pos = spawnPos[Random.Range(7, 13)];
+                break;
+            case CircleOrbit.L:
+                pos = spawnPos[Random.Range(0, 9)];
+                break;
+            case CircleOrbit.R:
+                pos = spawnPos[Random.Range(11, 20)];
+                break;
+        }
+        return pos;
+    }
 
 	void IncreaseDifficultyByTime (int time) {
 		if (hpChances.Count > 0 && time == hpChances.Keys[0]) {
