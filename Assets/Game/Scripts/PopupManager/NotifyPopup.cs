@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using ABIPlugins;
 using System;
 
-public class NotifyPopup : SingletonPopup<NotifyPopup> {
+public class NotifyPopup : SingletonMonoBehaviour<NotifyPopup> {
 
 	public Text title;
 	public Text content;
@@ -36,15 +35,9 @@ public class NotifyPopup : SingletonPopup<NotifyPopup> {
 		} else {
 			this.no.gameObject.SetActive(false);
 		}
-		base.Show();
-	}
+}
 
 	public void OnNoClick () {
-		base.Hide(()=>{
-			if (noCallback != null) {
-				noCallback ();
-			}
-		});
-
+		// Call hide popup
 	}
 }

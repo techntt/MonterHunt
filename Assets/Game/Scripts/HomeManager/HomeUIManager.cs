@@ -12,6 +12,7 @@ public class HomeUIManager : SingletonMonoBehaviour<HomeUIManager>
     public Image[] buttons;
     public Sprite[] imgButton;
     public Vector2[] positions;
+    public Button tabToPlay;
 
 
     private bool menuIsShowed;
@@ -47,6 +48,7 @@ public class HomeUIManager : SingletonMonoBehaviour<HomeUIManager>
                 cMenu = -1;
                 menuIsShowed = false;
                 ship.DOMove(positions[5], 0.3f);
+                tabToPlay.interactable = true;
             }
         }
         else
@@ -58,6 +60,7 @@ public class HomeUIManager : SingletonMonoBehaviour<HomeUIManager>
             popup[cMenu].mTrans.DOAnchorPos(positions[1], 0.3f);
             menuIsShowed = true;
             ship.DOMove(positions[4], 0.3f);
+            tabToPlay.interactable = false;
         }
     }
 

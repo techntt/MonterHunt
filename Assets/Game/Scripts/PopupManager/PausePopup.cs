@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using ABIPlugins;
 
-public class PausePopup : SingletonPopup<PausePopup> {
+public class PausePopup : BasePopup {
 
 	public Image settingBtn;
 	public Image questBtn;
@@ -16,7 +15,6 @@ public class PausePopup : SingletonPopup<PausePopup> {
 	bool isQuest;
 
 	public void Show () {
-		base.Show();
 		if (settingTab.gameObject.activeSelf) {
 			settingTab.Show();
 			isQuest = false;
@@ -28,9 +26,8 @@ public class PausePopup : SingletonPopup<PausePopup> {
 		Time.timeScale = 0;
 	}
 
-	public override void Hide () {
-		SoundManager.Instance.PlayUIButtonClick();
-		base.Hide();
+	public void Hide () {
+		SoundManager.Instance.PlayUIButtonClick();		
 		PlayerSettingData.Instance.Save();
 		Time.timeScale = 1;
 	}

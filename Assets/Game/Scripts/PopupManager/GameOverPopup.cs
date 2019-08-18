@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using ABIPlugins;
 
-public class GameOverPopup : SingletonPopup<GameOverPopup> {
+public class GameOverPopup : BasePopup {
 
 	public Text title;
 	public Text score;
@@ -44,58 +43,58 @@ public class GameOverPopup : SingletonPopup<GameOverPopup> {
 		okButton.interactable = false;
 		rewardBtn.interactable = false;
 		shipImg.sprite = GameManager.Instance.player1.myRender.sprite;
-		base.Show(true, () => {
-			int min = GameManager.Instance.timePlay / 60;
-			int sec = GameManager.Instance.timePlay % 60;
-			time.text = string.Format("{0}:{1}", min, sec.ToString("D2"));
-			scoreValue = 0;
-			goldValue = 0;
-			goldCollect = 0;
-			goldBonus = 0;
-			int obj = CampaignManager.campaign.objective;
-			// tween the score and the progress
-			DOTween.To(() => scoreValue, x => scoreValue = x, GameManager.Instance.score, 1).OnUpdate(() => {
-				score.text = scoreValue.ToString();
-				proText.text = string.Format("{0}", Mathf.Min((float)scoreValue / obj, 1).ToString("P0"));
-				SoundManager.Instance.PlaySfxNoRewind (scoreSfx);
-			}).OnComplete(() => {
-				// tween the collected gold value
-				DOTween.To(() => goldCollect, x => goldCollect = x, GameManager.Instance.coin, 0.5f).OnUpdate(() => {
-					collectedGold.text = goldCollect.ToString();
-				}).OnComplete(() => {
-					// tween the bonus gold value
-					DOTween.To(() => goldBonus, x => goldBonus = x, GameManager.Instance.bonusCoin, 0.5f).OnUpdate(() => {
-						bonusGold.text = goldBonus.ToString();
-					}).OnComplete ( () => {
-						// tween the total gold value
-						DOTween.To(() => goldValue, x => goldValue = x, goldCollect + goldBonus, 0.5f).OnUpdate(() => {
-							gold.text = goldValue.ToString();
-						}).OnComplete(() => {
-							okButton.interactable = true;
-							if (AdsManager.Instance.rewardBasedVideo.IsLoaded()) {
-								rewardBtn.interactable = true;
-								temp = rewardBtnRect.DOScale(new Vector3(1.3f, 1.3f), 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
-							}
-						});
-					});
-				});
-			});
-			// tween the ship's position and the fill amount value
-			float des = GameManager.GetLinearValueSimilarTo(0, CampaignManager.campaign.objective, 0, bar.rect.width, GameManager.Instance.score);
-			ship.DOLocalMoveX(des, 1);
-			progress.DOFillAmount((float)GameManager.Instance.score / CampaignManager.campaign.objective, 1);
-		});
-	}
 
-	public override void Hide () {
+        //
+        int min = GameManager.Instance.timePlay / 60;
+        int sec = GameManager.Instance.timePlay % 60;
+        time.text = string.Format("{0}:{1}", min, sec.ToString("D2"));
+        scoreValue = 0;
+        goldValue = 0;
+        goldCollect = 0;
+        goldBonus = 0;
+        int obj = CampaignManager.campaign.objective;
+        // tween the score and the progress
+        DOTween.To(() => scoreValue, x => scoreValue = x, GameManager.Instance.score, 1).OnUpdate(() => {
+            score.text = scoreValue.ToString();
+            proText.text = string.Format("{0}", Mathf.Min((float)scoreValue / obj, 1).ToString("P0"));
+            SoundManager.Instance.PlaySfxNoRewind(scoreSfx);
+        }).OnComplete(() => {
+            // tween the collected gold value
+            DOTween.To(() => goldCollect, x => goldCollect = x, GameManager.Instance.coin, 0.5f).OnUpdate(() => {
+                collectedGold.text = goldCollect.ToString();
+            }).OnComplete(() => {
+                // tween the bonus gold value
+                DOTween.To(() => goldBonus, x => goldBonus = x, GameManager.Instance.bonusCoin, 0.5f).OnUpdate(() => {
+                    bonusGold.text = goldBonus.ToString();
+                }).OnComplete(() => {
+                    // tween the total gold value
+                    DOTween.To(() => goldValue, x => goldValue = x, goldCollect + goldBonus, 0.5f).OnUpdate(() => {
+                        gold.text = goldValue.ToString();
+                    }).OnComplete(() => {
+                        okButton.interactable = true;
+                        if (AdsManager.Instance.rewardBasedVideo.IsLoaded())
+                        {
+                            rewardBtn.interactable = true;
+                            temp = rewardBtnRect.DOScale(new Vector3(1.3f, 1.3f), 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
+                        }
+                    });
+                });
+            });
+        });
+        // tween the ship's position and the fill amount value
+        float des = GameManager.GetLinearValueSimilarTo(0, CampaignManager.campaign.objective, 0, bar.rect.width, GameManager.Instance.score);
+        ship.DOLocalMoveX(des, 1);
+        progress.DOFillAmount((float)GameManager.Instance.score / CampaignManager.campaign.objective, 1);
+
+    }
+
+    public void Hide () {
 		if (!watchVideo)
 			AdsManager.Instance.ShowInterAd();
 		SoundManager.Instance.PlayUIButtonClick();
-		base.Hide(() => {
-			AdsManager.Instance.rewardBasedVideo.OnAdRewarded -= HandleOnAdRewarded;
-			SceneManager.LoadScene(Const.SCENE_HOME);
-		});
-	}
+        AdsManager.Instance.rewardBasedVideo.OnAdRewarded -= HandleOnAdRewarded;
+        SceneManager.LoadScene(Const.SCENE_HOME);
+    }
 
 	public void DoubleReward () {
 		rewardBtn.interactable = false;

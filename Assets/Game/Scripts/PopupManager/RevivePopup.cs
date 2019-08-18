@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ABIPlugins;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class RevivePopup : SingletonPopup<RevivePopup> {
+public class RevivePopup : BasePopup {
 
 	public RectTransform bar;
 	public RectTransform shipPos;
@@ -19,7 +18,6 @@ public class RevivePopup : SingletonPopup<RevivePopup> {
 	bool isReward;
 
 	public void Show () {
-		base.Show();
 		isReward = false;
 		Time.timeScale = 0;
 		ship.sprite = GameManager.Instance.player1.myRender.sprite;
@@ -48,15 +46,13 @@ public class RevivePopup : SingletonPopup<RevivePopup> {
 		Hide();
 	}
 
-	public override void Hide () {
+	public void Hide () {
 		StopCoroutine("OnShow");
 		SoundManager.Instance.PlayUIButtonClick();
 		Time.timeScale = 1;
-		Hide(() => {
-			GameManager.Instance.gameResult = GAME_RESULT.GREAT;
-			GameManager.Instance.GameOver();
-		});
-	}
+        GameManager.Instance.gameResult = GAME_RESULT.GREAT;
+        GameManager.Instance.GameOver();
+    }
 
 	public void Revive () {
 		#if UNITY_EDITOR || UNITY_STANDALONE_WIN
@@ -76,22 +72,21 @@ public class RevivePopup : SingletonPopup<RevivePopup> {
 	void HandleOnAdClosed (object sender, System.EventArgs e) {
 		AdsManager.Instance.rewardBasedVideo.OnAdClosed -= HandleOnAdClosed;
 		AdsManager.Instance.rewardBasedVideo.OnAdRewarded -= HandleOnAdRewarded;
-		if (isReward) {
-			Hide(() => {
-				GameEventManager.Instance.OnPlayerRevive();
-				GlobalEventManager.Instance.OnWatchAds("revive", PopupManager.Instance.scene.ToString(), "finish");
-			});
-		} else {
-			Hide(() => {
-				Time.timeScale = 1;
-				GameManager.Instance.gameResult = GAME_RESULT.GREAT;
-				GameManager.Instance.GameOverDelay(0.5f);
-				GlobalEventManager.Instance.OnWatchAds("revive", PopupManager.Instance.scene.ToString(), "cancel");
-			});
-		}
-	}
-	// player get rewarded
-	void HandleOnAdRewarded (object sender, GoogleMobileAds.Api.Reward e) {
+		if (isReward) {            
+            GameEventManager.Instance.OnPlayerRevive();
+            GlobalEventManager.Instance.OnWatchAds("revive", PopupManager.Instance.scene.ToString(), "finish");
+        }
+        else {
+            Time.timeScale = 1;
+            GameManager.Instance.gameResult = GAME_RESULT.GREAT;
+            GameManager.Instance.GameOverDelay(0.5f);
+            GlobalEventManager.Instance.OnWatchAds("revive", PopupManager.Instance.scene.ToString(), "cancel");
+        }
+
+        // hide popup
+    }
+    // player get rewarded
+    void HandleOnAdRewarded (object sender, GoogleMobileAds.Api.Reward e) {
 //		base.Hide();
 //		GameEventManager.Instance.OnPlayerRevive();
 		isReward = true;

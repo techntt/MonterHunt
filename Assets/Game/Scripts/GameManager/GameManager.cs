@@ -127,14 +127,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 			if (state == GAME_STATE.PLAY)
 				Pause();
 			else if (state == GAME_STATE.PAUSE) {
-				ABIPlugins.PopupManager.Instance.SequenceHidePopup();
 				state = GAME_STATE.PLAY;
 			} else if (state == GAME_STATE.REVIVE) {
 				state = GAME_STATE.PREPARE;
-				ABIPlugins.PopupManager.Instance.SequenceHidePopup();
 			} else if (state == GAME_STATE.GAME_OVER) {
 				state = GAME_STATE.PREPARE;
-				ABIPlugins.PopupManager.Instance.SequenceHidePopup();
 			}
 		}
 	}
@@ -142,7 +139,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	public void Pause () {
 		SoundManager.Instance.PlayUIButtonClick();
 		state = GAME_STATE.PAUSE;
-		PausePopup.Instance.Show();
+		GameUIManager.Instance.ShowPausePopup ();
 		GlobalEventManager.Instance.OnButtonPressed("Game", "pause");
 	}
 
@@ -172,13 +169,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 			PlayerData.Instance.retryTimes = 0;
 		}
 		PlayerData.Instance.SaveAllData();
-		GameOverPopup.Instance.Show();
+		GameUIManager.Instance.ShowGameOverPopup();
 		CancelInvoke("AddTime");       
 	}
 
 	void Revive () {
 		state = GAME_STATE.REVIVE;
-		RevivePopup.Instance.Show();
+		GameUIManager.Instance.ShowRevivePopup();
 	}
 
 	//	void OnApplicationPause () {

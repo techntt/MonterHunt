@@ -98,7 +98,7 @@ public class Player : MonoBehaviour {
 			myShipData = ShipDataManager.Instance.shipData[type];
 			myShipUpgradeData = PlayerData.Instance.shipData[type];
 			// add bonus damage from upgrade
-			baseDamage = myShipData.baseDamage * (1 + 0.1f * PlayerData.Instance.shipData[type].powerLevel + xDamage);
+			baseDamage = myShipData.baseDamage * (1 + PlayerData.Instance.shipData[type].powerLevel + xDamage);
 			xDamage = 0;
 			xPoint = 1;
 			shipXPoint = CampaignManager.campaign.id + 1;

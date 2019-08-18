@@ -1,20 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ABIPlugins;
 
-public class SettingPopup : SingletonPopup<SettingPopup> {
+public class SettingPopup : BasePopup {
 
 	public SettingManager manager;
 
 	public void Show () {
-		base.Show();
 		manager.Show();
 	}
 
-	public override void Hide () {
+	public void Hide () {
 		SoundManager.Instance.PlayUIButtonClick();
-		base.Hide();
 		manager.Hide();
 	}
 }

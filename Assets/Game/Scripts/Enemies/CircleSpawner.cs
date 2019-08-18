@@ -50,6 +50,7 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 	void Awake () {
         Camera189.Instance.Init();
         float top = Camera189.gameView.yMax + 1;
+        Debug.Log("TOP: "+top);
         ReadDifficultyData();
 		hardenChance = minHardenChance;
 		phase1 = CampaignManager.campaign.phase1;

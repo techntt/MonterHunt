@@ -23,6 +23,8 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 	public AudioClip sfx_start;
 	public AudioClip sfxWarning;
 
+    public BasePopup revivePop, pausePop, gameoverPop;
+
 	public void RunCountDown () {
 		StartCoroutine("CountDown");
 	}
@@ -53,6 +55,22 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 		
 	}
     
+    public void ShowRevivePopup()
+    {
+        revivePop.Show();
+    }
+
+    public void ShowGameOverPopup()
+    {
+        gameoverPop.Show();
+    }
+
+
+    public void ShowPausePopup()
+    {
+        pausePop.Show();
+    }
+
 	void HandlePlayerGetCoin (Player p, Coin c) {
 		gold.text = GameManager.Instance.coin.ToString();
 	}

@@ -60,7 +60,6 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 				});
 				state = HOME_STATE.POPUP;
 			} else {
-				ABIPlugins.PopupManager.Instance.SequenceHidePopup();
 				state = HOME_STATE.NO_POPUP;
 			}
 		}
