@@ -12,46 +12,41 @@ public class RevivePopup : BasePopup {
 	public Image progress;
 	public Text percent;
 	public Text scoreLeft;
-	public Text countdown;
 	public RectTransform reviveNow;
 	public Button reviveBtn;
 	bool isReward;
 
-	public void Show () {
+	public override void Show () {
 		isReward = false;
 		Time.timeScale = 0;
 		ship.sprite = GameManager.Instance.player1.myRender.sprite;
-		StartCoroutine("OnShow");
-	}
+        InitUI();
+        base.Show();
+    }
 
-	IEnumerator OnShow () {
-		if (GameManager.Instance.phase == GAME_PHASE.BOSS)
-			scoreLeft.text = string.Format("Keep fighting!");
-		yield return new WaitForSecondsRealtime(0.5f);
-		int obj = CampaignManager.campaign.objective;
-		reviveNow.DOScale(new Vector3(1.4f, 1.4f), 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
-		float des = GameManager.GetLinearValueSimilarTo(0, obj, 0, bar.rect.width, GameManager.Instance.score);
-		shipPos.DOLocalMoveX(des, 1).SetUpdate(true);
-		progress.DOFillAmount((float)GameManager.Instance.score / obj, 1).SetUpdate(true);
-		int scoreValue = 0;
-		DOTween.To(() => scoreValue, x => scoreValue = x, GameManager.Instance.score, 1).SetUpdate(true).OnUpdate(() => {
-			percent.text = string.Format("{0}", Mathf.Min((float)scoreValue / obj, 1).ToString("P0"));
-			if (GameManager.Instance.phase != GAME_PHASE.BOSS)
-				scoreLeft.text = string.Format("Only {0} score more to face the boss", obj - scoreValue);
-		});
-		for (int i = 10; i > 0; i--) {
-			countdown.text = i.ToString();
-			yield return new WaitForSecondsRealtime(1);
-		}
-		Hide();
-	}
-
-	public void Hide () {
-		StopCoroutine("OnShow");
+    private void InitUI()
+    {
+        if (GameManager.Instance.phase == GAME_PHASE.BOSS)
+            scoreLeft.text = string.Format("Keep fighting!");
+        int obj = CampaignManager.campaign.objective;
+        reviveNow.DOScale(new Vector3(1.4f, 1.4f), 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
+        float des = GameManager.GetLinearValueSimilarTo(0, obj, 0, bar.rect.width, GameManager.Instance.score);
+        shipPos.DOLocalMoveX(des, 1).SetUpdate(true);
+        progress.DOFillAmount((float)GameManager.Instance.score / obj, 1).SetUpdate(true);
+        int scoreValue = 0;
+        DOTween.To(() => scoreValue, x => scoreValue = x, GameManager.Instance.score, 1).SetUpdate(true).OnUpdate(() => {
+            percent.text = string.Format("{0}", Mathf.Min((float)scoreValue / obj, 1).ToString("P0"));
+            if (GameManager.Instance.phase != GAME_PHASE.BOSS)
+                scoreLeft.text = string.Format("Only {0} score more to face the boss", obj - scoreValue);
+        });
+    }
+    
+	public void Close () {
 		SoundManager.Instance.PlayUIButtonClick();
 		Time.timeScale = 1;
         GameManager.Instance.gameResult = GAME_RESULT.GREAT;
         GameManager.Instance.GameOver();
+        base.Hide();
     }
 
 	public void Revive () {
@@ -84,15 +79,12 @@ public class RevivePopup : BasePopup {
         }
 
         // hide popup
+        base.Hide();
     }
     // player get rewarded
     void HandleOnAdRewarded (object sender, GoogleMobileAds.Api.Reward e) {
-//		base.Hide();
-//		GameEventManager.Instance.OnPlayerRevive();
+		GameEventManager.Instance.OnPlayerRevive();
 		isReward = true;
 	}
-
-	void PlayerRevive () {
-		
-	}
+    
 }

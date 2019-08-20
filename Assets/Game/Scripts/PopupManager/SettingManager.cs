@@ -8,13 +8,9 @@ public class SettingManager : MonoBehaviour {
 
 	public Image musicBtn;
 	public Image soundBtn;
-	public Image graphicBtn;
 	public Text musicText;
 	public Text soundText;
-	public Text graphicText;
-	public Image drag;
-	public Image touch;
-	public Color musicOn, musicOff, controlOn, controlOff;
+	public Color musicOn, musicOff;
 
 
 	public void Show () {
@@ -35,25 +31,8 @@ public class SettingManager : MonoBehaviour {
 			soundBtn.rectTransform.localPosition = new Vector3(-36, 0, 0);
 			soundBtn.color = musicOff;
 			soundText.text = "Off";
-		}
-		if (graphicBtn) {
-			if (PlayerSettingData.Instance.graphic == GRAPHIC_QUALITY.LOW) {
-				graphicBtn.rectTransform.localPosition = new Vector3(-36, 0, 0);
-				graphicBtn.color = musicOff;
-				graphicText.text = "Low";
-			} else {
-				graphicBtn.rectTransform.localPosition = new Vector3(36, 0, 0);
-				graphicBtn.color = musicOn;
-				graphicText.text = "High";
-			}
-		}
-		if (PlayerSettingData.Instance.controlStyle == CONTROL_STYLE.FIXED) {
-			drag.color = controlOn;
-			touch.color = controlOff;
-		} else {
-			drag.color = controlOff;
-			touch.color = controlOn;
-		}
+		}		
+        
 	}
 
 	public void Hide () {
@@ -92,36 +71,5 @@ public class SettingManager : MonoBehaviour {
 		SoundManager.Instance.PlayUIButtonClick();
 		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "setting_sound");
 	}
-
-	public void Graphic () {
-		if (PlayerSettingData.Instance.graphic == GRAPHIC_QUALITY.HIGH) {
-			PlayerSettingData.Instance.graphic = GRAPHIC_QUALITY.LOW;
-			graphicBtn.transform.DOLocalMoveX(-36, 0.2f).SetUpdate(true);
-			graphicBtn.DOColor(musicOff, 0.2f).SetUpdate(true);
-			graphicText.text = "Low";
-		} else {
-			PlayerSettingData.Instance.graphic = GRAPHIC_QUALITY.HIGH;
-			graphicBtn.transform.DOLocalMoveX(36, 0.2f).SetUpdate(true);
-			graphicBtn.DOColor(musicOn, 0.2f).SetUpdate(true);
-			graphicText.text = "High";
-		}
-		SoundManager.Instance.PlayUIButtonClick();
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "setting_graphic");
-	}
-
-	public void SelectDrag () {
-		PlayerSettingData.Instance.controlStyle = CONTROL_STYLE.FIXED;
-		drag.color = controlOn;
-		touch.color = controlOff;
-		SoundManager.Instance.PlayUIButtonClick();
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "setting_drag");
-	}
-
-	public void SelectTouch () {
-		PlayerSettingData.Instance.controlStyle = CONTROL_STYLE.FOLLOW;
-		drag.color = controlOff;
-		touch.color = controlOn;
-		SoundManager.Instance.PlayUIButtonClick();
-		GlobalEventManager.Instance.OnButtonPressed(PopupManager.Instance.scene.ToString(), "setting_touch");
-	}
+    	
 }

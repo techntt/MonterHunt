@@ -147,14 +147,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		Invoke("GameOver", delayTime);
 	}
 
-	public void GameOver () {
+	public void GameOver () {        
 		PlayerData.Instance.retryTimes++;
 		phase = GAME_PHASE.NONE;
 		state = GAME_STATE.GAME_OVER;
 		GameEventManager.Instance.OnGameEnd();
 		GlobalEventManager.Instance.OnGameEnd();
-//        if (OnEndGame != null)
-//            OnEndGame(_timePlay);
         QuestManager.SaveQuest();
 		// save highscore and coin earned
 		bonusCoin = Mathf.CeilToInt(300f * goldPerCoin * score / CampaignManager.campaign.objective);

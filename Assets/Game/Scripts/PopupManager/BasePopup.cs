@@ -9,11 +9,13 @@ public class BasePopup : MonoBehaviour
 
     public virtual void Show()
     {
+        gameObject.SetActive(true);
         isShow = true;
     }
 
     public virtual void Hide()
     {
         isShow = false;
+        gameObject.SetActive(false);
     }
 }
