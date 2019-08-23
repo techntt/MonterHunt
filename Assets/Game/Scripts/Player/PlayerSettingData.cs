@@ -6,6 +6,8 @@ public class PlayerSettingData : Singleton<PlayerSettingData> {
 
 	public bool isMusic;
 	public bool isSound;
+    public bool isVibrate;
+
 	public CONTROL_STYLE controlStyle;
 	public GRAPHIC_QUALITY graphic;
 
