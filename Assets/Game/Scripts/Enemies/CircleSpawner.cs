@@ -41,9 +41,7 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 	int minCircles = 3;
 	public ParticleSystem cloudParticle, starParticle;
 
-	Vector3[] spawnPos;
-
-	BaseFormation bf1, bf2;
+	Vector3[] spawnPos;    
 	BaseBoss boss;
     
 
@@ -86,14 +84,10 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 		GameEventManager.Instance.CircleExplode += HandleCircleExplode;
 		GameManager.Instance.OnTimeChange += IncreaseDifficultyByTime;
 		// spawn formations and boss
-		GameObject go = Instantiate(Resources.Load(Const.FORMATION + CampaignManager.campaign.form1ID)) as GameObject;
-		bf1 = (BaseFormation)go.GetComponent(typeof(BaseFormation));
-		go = Instantiate(Resources.Load(Const.FORMATION + CampaignManager.campaign.form2ID)) as GameObject;
-		bf2 = (BaseFormation)go.GetComponent(typeof(BaseFormation));
-		go = Instantiate(Resources.Load(Const.BOSS + CampaignManager.campaign.bossID)) as GameObject;
+		GameObject go = Instantiate(Resources.Load(Const.BOSS + CampaignManager.campaign.bossID)) as GameObject;
 		boss = (BaseBoss)go.GetComponent(typeof(BaseBoss));
 		boss.maxHp = CampaignManager.campaign.bossHp;
-        
+        Debug.Log("Boss HP: "+boss.maxHp);
 	}
 
 	void HandleOnGameStart () {
@@ -164,22 +158,12 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 				break;
 			case GAME_PHASE.PHASE2:
 				orbitChance = phase2;
-				StartCoroutine("SpawnCircles");
+				//StartCoroutine("SpawnCircles");
 				break;
 			case GAME_PHASE.PHASE3:
 				orbitChance = phase3;
-				StartCoroutine("SpawnCircles");
-				break;
-			case GAME_PHASE.FORM1:
-				StopCoroutine("SpawnCircles");
-				bf1.gameObject.SetActive(true);
-				bf1.Init();
-				break;
-			case GAME_PHASE.FORM2:
-				StopCoroutine("SpawnCircles");
-				bf2.gameObject.SetActive(true);
-				bf2.Init();
-				break;
+				//StartCoroutine("SpawnCircles");
+				break;			
 			case GAME_PHASE.BOSS:
 				StopCoroutine("SpawnCircles");
 				StartCoroutine("BossAppear");

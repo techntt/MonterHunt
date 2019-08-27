@@ -284,9 +284,7 @@ public enum CONTROL_STYLE {
 
 public enum GAME_PHASE {
 	PHASE1,
-	FORM1,
 	PHASE2,
-	FORM2,
 	PHASE3,
 	BOSS,
 	NONE

@@ -9,13 +9,7 @@ public class AdsManager : SingletonMonoBehaviour<AdsManager> {
 	public RewardBasedVideoAd rewardBasedVideo;
 	InterstitialAd ad;
 
-	string appId = "ca-app-pub-9819920607806935~6350142352";
-	// real ad id
-	//	[HideInInspector]public string videoAdId = "ca-app-pub-9819920607806935/8073862537";
-	//	[HideInInspector]public string interAdId = "ca-app-pub-9819920607806935/8265434224";
-	// test ad id
-//	public string videoAdId = "ca-app-pub-3940256099942544/5224354917";
-//	public string interAdId = "ca-app-pub-3940256099942544/1033173712";
+	string appId = "";	
 
 	void Start () {
 		MobileAds.Initialize(appId);
@@ -28,9 +22,8 @@ public class AdsManager : SingletonMonoBehaviour<AdsManager> {
 	}
 
 	public void LoadVideoAd () {
-		string videoAdId = "ca-app-pub-9819920607806935/8073862537";
+		string videoAdId = "";
 		AdRequest request = new AdRequest.Builder().
-//			AddTestDevice("2440f383ab45852764fa76b0dabc17aa").
 			Build();
 		rewardBasedVideo.LoadAd(request, videoAdId);
 	}
@@ -42,10 +35,9 @@ public class AdsManager : SingletonMonoBehaviour<AdsManager> {
 	}
 
 	public void LoadInterAd () {
-		string interAdId = "ca-app-pub-9819920607806935/8265434224";
+		string interAdId = "";
 		ad = new InterstitialAd(interAdId);
 		AdRequest r = new AdRequest.Builder().
-//			AddTestDevice("2440f383ab45852764fa76b0dabc17aa").
 			Build();
 		ad.LoadAd(r);
 	}
