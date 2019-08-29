@@ -68,7 +68,8 @@ public class BaseBoss : Damageable {
 			}
 			GameEventManager.Instance.OnBossDefeated();
 		}
-		GameUIManager.Instance.bossHealth.fillAmount = hp / maxHp;
+
+        // Show boss health
 	}
 
 	IEnumerator Dead () {

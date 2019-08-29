@@ -7,11 +7,7 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 	public Text score;
 	public Text gold;
 	public Text time;
-	public Image shipImage;
 	public GameObject progressBar;
-	public GameObject bossHealthBar;
-	public Animator bossHealthAnim;
-	public Image bossHealth;
 	public Text centerText;
 	public Animator HudAnim;
 	public Animator centerTextAnim;
@@ -51,8 +47,6 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 		GameEventManager.Instance.GamePhaseChanged += HandleGamePhaseChanged;
 		GameEventManager.Instance.BossAppear += OnBossFinishAppear;
 		GameManager.Instance.OnTimeChange += ShowTime;
-		shipImage.sprite = GameManager.Instance.player1.myRender.sprite;
-		
 	}
     
     public void ShowRevivePopup()
@@ -106,11 +100,8 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 		centerText.text = "";
 	}
 
-	IEnumerator FillBossHealth () {
-		bossHealthBar.SetActive(true);
-		yield return new WaitForSeconds(1.5f);
-		bossHealthAnim.enabled = false;
-		bossHealth.fillAmount = 1;
+	IEnumerator FillBossHealth () {		
+		yield return new WaitForSeconds(0);
 		GameEventManager.Instance.OnBossFinishAppear();
 		SoundManager.Instance.PlayBossMusic();
 	}

@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour {
 
-	public RectTransform bar;
-	public RectTransform ship;
-	public Image shipIcon;
-	public Image progImage;
-	public Text progText;
+    public Slider slider;
 
 	string checkScore = "CheckScore";
 
@@ -25,9 +21,6 @@ public class ProgressBar : MonoBehaviour {
 		int score = GameManager.Instance.score;
 		int objective = CampaignManager.campaign.objective;
 		float percent = (float)score / objective;
-		progImage.fillAmount = percent;
-		float des = GameManager.GetLinearValueSimilarTo(0, objective, 0, bar.rect.width, score);
-		ship.localPosition = new Vector3(des, 0);
-		progText.text = string.Format("{0}%", (int)(percent*100));
+        slider.value = percent;
 	}
 }
