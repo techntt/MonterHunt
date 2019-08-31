@@ -39,7 +39,6 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
 
 	public int activeCircles;
 	int minCircles = 3;
-	public ParticleSystem cloudParticle, starParticle;
 
 	Vector3[] spawnPos;    
 	BaseBoss boss;
@@ -326,11 +325,7 @@ public class CircleSpawner : SingletonMonoBehaviour<CircleSpawner> {
             bonusSpeed = GameManager.GetLinearValueSimilarTo(0, estimatedTime, 0, 8, time);
             // change spawn time
             spawnDelayTime = GameManager.GetLinearValueSimilarTo(0, estimatedTime, minDelayTime, maxDelayTime, time);
-            // change particle speed
-            ParticleSystem.MainModule m = cloudParticle.main;
-            m.simulationSpeed = GameManager.GetLinearValueSimilarTo(0, estimatedTime, 1, 5, time);
-            m = starParticle.main;
-            m.simulationSpeed = GameManager.GetLinearValueSimilarTo(0, estimatedTime, 1, 5, time);
+
             // change spawned rate of harden type
             hardenChance = (int)GameManager.GetLinearValueSimilarTo(0, estimatedTime, minHardenChance, maxHardenChance, time);
         }  

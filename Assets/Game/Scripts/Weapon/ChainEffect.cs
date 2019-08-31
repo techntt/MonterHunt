@@ -14,12 +14,12 @@ public class ChainEffect : MonoBehaviour {
 		this.target = target;
 		player = GameManager.Instance.player1.firePos;
 		circle = target.transform;
-		myRender.size = target.myRender.size * 1.4f;
-		myRender.color = target.myRender.color;
+		myRender.size =  new Vector2(1.4f,1.4f);
+		myRender.color = Color.magenta;
 		myRender.transform.position = circle.position;
 		myLine.sortingOrder = -1;
 		myLine.startColor = GameManager.Instance.player1.myRender.color;
-		myLine.endColor = target.myRender.color;
+		myLine.endColor = Color.red;
 		myLine.SetPosition(0, Vector3.zero);
 		myLine.SetPosition(1, Vector3.zero);
 		target.myCollider.enabled = false;

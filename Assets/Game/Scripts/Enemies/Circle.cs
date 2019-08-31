@@ -5,9 +5,9 @@ using DG.Tweening;
 
 public class Circle : Damageable {
 
-	public UnityEngine.UI.Text hpText;
+    public HealthBar health;
+    public SpriteRenderer myRender;
 	public CircleCollider2D myCollider;
-	public SpriteRenderer myRender;
 	public Rigidbody2D myBody;
 	public AudioClip explodeSfx;
 
@@ -29,12 +29,7 @@ public class Circle : Damageable {
 	public bool hasCoin;
 	public bool hasBonus;
 
-    // truong.nt
-//    private bool sucking = false;
-//    public bool isSucked = false;
-//    private SpecialObject spObj;
-//    private Gravity grav;
-    [HideInInspector] public Transform trans;
+    public Transform trans;
 
     public void Init (int hp, CircleOrbit orbit, float speed, bool hasReward, bool hasCoin = true, bool hasBonus = true) {
 		wasInScene = false;
@@ -45,8 +40,8 @@ public class Circle : Damageable {
 		this.hasBonus = hasBonus;
 		maxHp = hp;
 		this.hp = hp;
-		myRender.color = GameManager.GetColorByHP(hp, CircleSpawner.Instance.maxHP);
-		hpText.text = "" + hp;
+        trans.localScale = new Vector3(1, 1, 1);
+        health.Init(myRender.size.y,hp);
 		initSpeed = speed;
 		this.speed = speed;
 		if (type == CircleType.HARDEN)
@@ -100,48 +95,26 @@ public class Circle : Damageable {
 					myBody.velocity = Vector2.Reflect(myBody.velocity, Vector2.left);
 				}
 			}
-//			else if (col.CompareTag(Const.DUMMY_GRAVITY)){ // for dummy object have gravity  
-//                GravityCollider gc = col.gameObject.GetComponent(typeof(GravityCollider)) as GravityCollider;
-//                spObj = gc.spObj;
-//                grav = spObj.GetComponent(typeof(Gravity)) as Gravity;                   
-//                if(grav.canAdd()&& spObj.myCollider.radius > myCollider.radius)
-//                {
-//                    grav.currChilds++;
-//                    myBody.velocity = Vector3.zero;
-//                    sucking = true;
-//                }               
-//            }
         }
 	}
 
-//    private void Update()
-//    {
-//        if (sucking && spObj != null)
-//        {
-//            trans.position = Vector2.MoveTowards(trans.position, spObj.trans.position, 3f * Time.deltaTime);
-//            float distance = Vector2.Distance(trans.position, spObj.trans.position);            
-//            if(distance <= spObj.myCollider.radius)
-//            {
-//                sucking = false;
-//                isSucked = true;                
-//                grav.AddChild(gameObject.GetComponent(typeof(Circle)) as Circle);
-//            }
-//        } 
-//    }
-
+    bool isScale = false;
 	public override void TakeDamage (float damage) {
 		if (wasInScene) {
 			if (type == CircleType.HARDEN)
 				damage /= 3;
 			if (!isDead) {
 				hp -= damage;
-				if (hp > 0) {
-					myRender.color = GameManager.GetColorByHP(Mathf.CeilToInt(hp), CircleSpawner.Instance.maxHP);
-					if (type != CircleType.HARDEN) {
-						this.damage = GameManager.GetLinearValueSimilarTo(1, CircleSpawner.Instance.maxHP, 1, 50, hp);
-						this.damage = Mathf.CeilToInt(this.damage);
-					}
-					hpText.text = "" + Mathf.CeilToInt(hp);
+				if (hp > 0)
+                {
+                    if (!isScale)
+                    {
+                        isScale = true;
+                        trans.DOPunchScale(new Vector3(0.5f, 0.5f, 1f), 0.2f).OnComplete(() => {
+                            isScale = false;
+                        });
+                    }   
+                    health.SetHealthBar(hp);
 				} else {
 					Die();
 				}
@@ -152,8 +125,6 @@ public class Circle : Damageable {
 	public override void Die () {
 		isDead = true;
 		SoundManager.Instance.PlaySfx(explodeSfx, SFX_PLAY_STYLE.DONT_REWIND);
-		if (PlayerSettingData.Instance.graphic == GRAPHIC_QUALITY.HIGH)
-			CircleManager.Instance.SpawnExplodeEffect(transform.position, myRender.color);
 		// drop coin and daily item
 		if (hasCoin) {
 			int numOfCoin = CircleSpawner.GetNumberOfCoinBySize(size);
@@ -208,9 +179,6 @@ public class Circle : Damageable {
 
 public class Damageable : MonoBehaviour {
 	public bool isDead;
-	/// <summary>
-	/// damage of object, used when it collides with player
-	/// </summary>
 	public float damage;
 
 	public float maxHp;
