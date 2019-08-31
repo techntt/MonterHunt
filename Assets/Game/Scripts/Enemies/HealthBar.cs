@@ -14,13 +14,21 @@ public class HealthBar : MonoBehaviour
     float maxHp;
     #endregion;
 
+    #region Unity Methods
+    private void Awake()
+    {
+        maxSize = bar.size;
+    }
+    #endregion;
+
+
     #region Public Methods
     public void Init(float ySize,float maxHp)
     {
         Vector2 pos = trans.localPosition;
         pos.y = (ySize / 2) + 0.15f;
         trans.localPosition = pos;
-        maxSize = bar.size;
+        bar.size = maxSize;
         this.maxHp = maxHp;
         SetHealthBar(maxHp);
     }

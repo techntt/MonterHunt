@@ -8,6 +8,12 @@ public class BaseEffect : MonoBehaviour {
 	public Animator myAnim;
 	public ParticleSystem myParticle;
 
+
+    public virtual void Init(float damage)
+    {
+
+    }
+
 	public virtual void Init () {
 		Invoke("Expire", duration);
 		if (myAnim != null) {
@@ -28,5 +34,6 @@ public enum EFFECT_TYPE {
 	FLOAT_TEXT,
 	EXPLODE,
 	PLAYER_DEATH,
-	NONE
+    DAMAGE_TEXT,
+    NONE
 }

@@ -105,12 +105,16 @@ public class Circle : Damageable {
 				damage /= 3;
 			if (!isDead) {
 				hp -= damage;
+                Vector2 txtPos = trans.position;
+                txtPos.y += (myRender.size.y / 2 + 0.15f);
+                BaseEffect dmgText =  EffectManager.Instance.SpawnEffect(EFFECT_TYPE.DAMAGE_TEXT, txtPos);
+                dmgText.Init(damage);
 				if (hp > 0)
                 {
                     if (!isScale)
                     {
                         isScale = true;
-                        trans.DOPunchScale(new Vector3(0.5f, 0.5f, 1f), 0.2f).OnComplete(() => {
+                        trans.DOPunchScale(new Vector3(0.3f, 0.3f, 1f), 0.2f).OnComplete(() => {
                             isScale = false;
                         });
                     }   
