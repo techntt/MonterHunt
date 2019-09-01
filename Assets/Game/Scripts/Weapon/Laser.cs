@@ -13,7 +13,7 @@ public class Laser : Weapon {
 	public override void Init () {
 		base.Init();
 		laser.sortingOrder = 5;
-		firePos = GameManager.Instance.player1.firePos;
+		firePos = GameManager.Instance.player.firePos;
 	}
 
 	public override void Activate () {
@@ -41,15 +41,15 @@ public class Laser : Weapon {
 		Color laserColor = new Color();
 		switch (WeaponManager.Instance.lastValue) {
 			case 0:
-				dps = WeaponDataCalculator.Instance.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * WeaponDataCalculator.LASER_CYAN * GameManager.Instance.player1.baseDamage;
+				dps = WeaponDataCalculator.Instance.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * WeaponDataCalculator.LASER_CYAN * GameManager.Instance.player.baseDamage;
 				laserColor = Color.cyan;
 				break;
 			case 1:
-				dps = WeaponDataCalculator.Instance.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * WeaponDataCalculator.LASER_YELLOW * GameManager.Instance.player1.baseDamage;
+				dps = WeaponDataCalculator.Instance.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * WeaponDataCalculator.LASER_YELLOW * GameManager.Instance.player.baseDamage;
 				laserColor = Color.yellow;
 				break;
 			case 2:
-				dps = WeaponDataCalculator.Instance.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * WeaponDataCalculator.LASER_RED * GameManager.Instance.player1.baseDamage;
+				dps = WeaponDataCalculator.Instance.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * WeaponDataCalculator.LASER_RED * GameManager.Instance.player.baseDamage;
 				laserColor = Color.red;
 				break;
 		}

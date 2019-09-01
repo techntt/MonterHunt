@@ -17,11 +17,11 @@ public class Bullet : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D col) {
 		if (type == BulletType.Slow) {
 			Damageable d = ColliderRef.Instance.GetDamageable(col.GetInstanceID());
-			if (d != null && d is Circle) {
-				Circle c = (Circle)d;
+			if (d != null && d is BaseEnemy) {
+                BaseEnemy c = (BaseEnemy)d;
 				if (c.speed == c.initSpeed) {
 					c.speed *= 0.5f;
-					c.myBody.velocity *= 0.5f;
+					c.mRigi.velocity *= 0.5f;
 				}
 			}
 		} else if (type == BulletType.Rocket) {

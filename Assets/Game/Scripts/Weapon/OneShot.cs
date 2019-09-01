@@ -11,7 +11,7 @@ public class OneShot : Weapon {
 
 	public override void Start () {
 		base.Start();
-		myParticle.transform.SetParent(GameManager.Instance.player1.firePos);
+		myParticle.transform.SetParent(GameManager.Instance.player.firePos);
 		myParticle.transform.localPosition = Vector3.zero;
 	}
 
@@ -37,29 +37,29 @@ public class OneShot : Weapon {
 	}
 
 	public void Bomb () {
-		ExplodeEffect e = (ExplodeEffect)EffectManager.Instance.SpawnEffect(EFFECT_TYPE.EXPLODE, GameManager.Instance.player1.transform.position);
-		e.Init(10, WeaponDataCalculator.BOMB_DAMAGE * GameManager.Instance.player1.baseDamage);
+		ExplodeEffect e = (ExplodeEffect)EffectManager.Instance.SpawnEffect(EFFECT_TYPE.EXPLODE, GameManager.Instance.player.transform.position);
+		e.Init(10, WeaponDataCalculator.BOMB_DAMAGE * GameManager.Instance.player.baseDamage);
 	}
 
 	public void Rocket () {
 		Bullet b = BulletManager.Instance.PopBullet(BulletType.Rocket);
-		b.transform.position = GameManager.Instance.player1.firePos.position;
+		b.transform.position = GameManager.Instance.player.firePos.position;
 		Vector3 des = new Vector3(0, 3, 0);
 		b.transform.rotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.right, des - b.transform.position));
 		b.Init(0, Color.white, 0);
 		b.target = null;
 		b.transform.DOMove(des, 3).SetSpeedBased(true).OnComplete(() => {
 			ExplodeEffect e = (ExplodeEffect)EffectManager.Instance.SpawnEffect(EFFECT_TYPE.EXPLODE, b.transform.position);
-			e.Init(10, WeaponDataCalculator.ROCKET_DAMAGE * GameManager.Instance.player1.baseDamage);
+			e.Init(10, WeaponDataCalculator.ROCKET_DAMAGE * GameManager.Instance.player.baseDamage);
 			b.gameObject.SetActive(false);
 		});
 	}
 
 	public void Barrier () {
 		Bullet b = BulletManager.Instance.PopBullet(BulletType.Bloom);
-		b.transform.position = GameManager.Instance.player1.firePos.position;
+		b.transform.position = GameManager.Instance.player.firePos.position;
 		b.transform.rotation = Quaternion.Euler(0, 0, 90);
-		b.Init(2, Color.white, WeaponDataCalculator.BARRIER_DPS * GameManager.Instance.player1.baseDamage);
+		b.Init(2, Color.white, WeaponDataCalculator.BARRIER_DPS * GameManager.Instance.player.baseDamage);
 	}
 
 	public void Seek () {
@@ -76,20 +76,20 @@ public class OneShot : Weapon {
 		}
 		for (int i = 0; i < target.Count; i++) {
 			Bullet b = BulletManager.Instance.PopBullet(BulletType.Rocket);
-			b.transform.position = GameManager.Instance.player1.firePos.position;
+			b.transform.position = GameManager.Instance.player.firePos.position;
 			b.transform.rotation = Quaternion.Euler(0, 0, 90);
 			b.target = target[i];
-			b.Init(8, Color.white, WeaponDataCalculator.SEEK_DAMAGE * GameManager.Instance.player1.baseDamage);
+			b.Init(8, Color.white, WeaponDataCalculator.SEEK_DAMAGE * GameManager.Instance.player.baseDamage);
 		}
 	}
 
 	public void Lightning () {
 		if (!isChaining) {
 			isChaining = true;
-			List<Circle> list = FindActiveCircles();
+			List<BaseEnemy> list = FindActiveCircles();
 			if (list.Count == 0)
 				return;
-			List<Circle> target = new List<Circle>();
+			List<BaseEnemy> target = new List<BaseEnemy>();
 			for (int i = 0; i < 3; i++) {
 				int c = Random.Range(0, list.Count);
 				target.Add(list[c]);
@@ -99,13 +99,13 @@ public class OneShot : Weapon {
 			}
 			myParticle.Clear();
 			ParticleSystem.MainModule main = myParticle.main;
-			main.startColor = GameManager.Instance.player1.myRender.color;
+			main.startColor = GameManager.Instance.player.myRender.color;
 			myParticle.gameObject.SetActive(true);
 			StartCoroutine(ILightning(target));
 		}
 	}
 
-	IEnumerator ILightning (List<Circle> target) {
+	IEnumerator ILightning (List<BaseEnemy> target) {
 		int count = target.Count > chains.Length ? chains.Length : target.Count;
 		for (int i = 0; i < count; i++) {
 			chains[i].Init(target[i]);
@@ -130,12 +130,12 @@ public class OneShot : Weapon {
 		return activeEnemies;
 	}
 
-	public List<Circle> FindActiveCircles () {
+	public List<BaseEnemy> FindActiveCircles () {
 		IList<Damageable> enemies = ColliderRef.Instance.DamageableRef.Values;
-		List<Circle> activeEnemies = new List<Circle>();
+		List<BaseEnemy> activeEnemies = new List<BaseEnemy>();
 		for (int i = 0; i < enemies.Count; i++) {
-			if (enemies[i].gameObject.activeInHierarchy && enemies[i] is Circle) {
-				activeEnemies.Add((Circle)enemies[i]);
+			if (enemies[i].gameObject.activeInHierarchy && enemies[i] is BaseEnemy) {
+				activeEnemies.Add((BaseEnemy)enemies[i]);
 			}
 		}
 		return activeEnemies;

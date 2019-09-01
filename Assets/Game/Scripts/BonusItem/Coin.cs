@@ -21,7 +21,7 @@ public class Coin : MonoBehaviour {
 	int gold;
 
 	void Start () {
-		player = GameManager.Instance.player1.transform;
+		player = GameManager.Instance.player.transform;
 		gold = GameManager.Instance.goldPerCoin;
 	}
 
@@ -54,7 +54,7 @@ public class Coin : MonoBehaviour {
 				GameManager.Instance.coin += gold * 10;
 				SoundManager.Instance.PlaySfx(sfx2, SFX_PLAY_STYLE.OVERRIDE);
 			}
-			GameEventManager.Instance.OnPlayerGetCoin(GameManager.Instance.player1, this);
+			GameEventManager.Instance.OnPlayerGetCoin(GameManager.Instance.player, this);
 			gameObject.SetActive(false);
 		} else if (col.CompareTag(Const.TAG_MAGNET)) {
 			isPulled = true;

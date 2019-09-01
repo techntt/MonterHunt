@@ -36,7 +36,7 @@ public class GameOverPopup : BasePopup {
 		gold.text = "0";
 		okButton.interactable = false;
 		rewardBtn.interactable = false;
-		shipImg.sprite = GameManager.Instance.player1.myRender.sprite;
+		shipImg.sprite = GameManager.Instance.player.myRender.sprite;
 
         //
         int min = GameManager.Instance.timePlay / 60;
@@ -44,31 +44,17 @@ public class GameOverPopup : BasePopup {
         time.text = string.Format("{0}:{1}", min, sec.ToString("D2"));
         scoreValue = 0;
         goldValue = 0;
-        int obj = CampaignManager.campaign.objective;
-        // tween the score and the progress
-        DOTween.To(() => scoreValue, x => scoreValue = x, GameManager.Instance.score, 1).OnUpdate(() => {
-            score.text = scoreValue.ToString();
-            proText.text = string.Format("{0}", Mathf.Min((float)scoreValue / obj, 1).ToString("P0"));
-            SoundManager.Instance.PlaySfxNoRewind(scoreSfx);
+        // tween the total gold value
+        DOTween.To(() => goldValue, x => goldValue = x, GameManager.Instance.coin, 0.5f).OnUpdate(() => {
+            gold.text = goldValue.ToString();
         }).OnComplete(() => {
-
-            // tween the total gold value
-            DOTween.To(() => goldValue, x => goldValue = x, GameManager.Instance.coin + GameManager.Instance.bonusCoin, 0.5f).OnUpdate(() => {
-                gold.text = goldValue.ToString();
-            }).OnComplete(() => {
-                okButton.interactable = true;
-                if (AdsManager.Instance.rewardBasedVideo.IsLoaded())
-                {
-                    rewardBtn.interactable = true;
-                    temp = rewardBtnRect.DOScale(new Vector3(1.3f, 1.3f), 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
-                }
-            });
-           
+            okButton.interactable = true;
+            if (AdsManager.Instance.rewardBasedVideo.IsLoaded())
+            {
+                rewardBtn.interactable = true;
+                temp = rewardBtnRect.DOScale(new Vector3(1.3f, 1.3f), 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
+            }
         });
-        // tween the ship's position and the fill amount value
-        float des = GameManager.GetLinearValueSimilarTo(0, CampaignManager.campaign.objective, 0, bar.rect.width, GameManager.Instance.score);
-        ship.DOLocalMoveX(des, 1);
-        progress.DOFillAmount((float)GameManager.Instance.score / CampaignManager.campaign.objective, 1);
         base.Show();
     }
 
@@ -86,8 +72,8 @@ public class GameOverPopup : BasePopup {
 		temp.Kill();
 		rewardBtnRect.localScale = new Vector3(1, 1, 1);
 		#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		PlayerData.Instance.gold += GameManager.Instance.coin + GameManager.Instance.bonusCoin;
-		DOTween.To(() => goldValue, x => goldValue = x, (GameManager.Instance.coin + GameManager.Instance.bonusCoin) *2, 1).OnUpdate(() => {
+		PlayerData.Instance.gold += GameManager.Instance.coin;
+		DOTween.To(() => goldValue, x => goldValue = x, (GameManager.Instance.coin) *2, 1).OnUpdate(() => {
 			gold.text = goldValue.ToString();
 			SoundManager.Instance.PlaySfxNoRewind (scoreSfx);
 		});
@@ -100,8 +86,8 @@ public class GameOverPopup : BasePopup {
 
 	void HandleOnAdRewarded (object sender, GoogleMobileAds.Api.Reward e) {
 		watchVideo = true;
-		PlayerData.Instance.gold += GameManager.Instance.coin + GameManager.Instance.bonusCoin;
-		DOTween.To(() => goldValue, x => goldValue = x, (GameManager.Instance.coin + GameManager.Instance.bonusCoin) *2, 1).OnUpdate(() => {
+		PlayerData.Instance.gold += GameManager.Instance.coin ;
+		DOTween.To(() => goldValue, x => goldValue = x, (GameManager.Instance.coin) *2, 1).OnUpdate(() => {
 			gold.text = goldValue.ToString();
 		});
         base.Hide();

@@ -42,7 +42,6 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 	}
 
 	void Start () {
-		GameEventManager.Instance.PlayerGetScore += HandlePlayerGetScore;
 		GameEventManager.Instance.PlayerGetCoin += HandlePlayerGetCoin;
 		GameEventManager.Instance.GamePhaseChanged += HandleGamePhaseChanged;
 		GameEventManager.Instance.BossAppear += OnBossFinishAppear;
@@ -80,9 +79,7 @@ public class GameUIManager : SingletonMonoBehaviour<GameUIManager> {
 		}
 	}
 
-	void HandlePlayerGetScore (Player p, int value) {
-		score.text = GameManager.Instance.score.ToString();
-	}
+
 
 	void ShowTime (int time) {
 		int min = time / 60;

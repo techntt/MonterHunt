@@ -6,24 +6,24 @@ public class ChainEffect : MonoBehaviour {
 	
 	public SpriteRenderer myRender;
 	public LineRenderer myLine;
-	public Circle target;
+	public BaseEnemy target;
 	Transform player;
 	Transform circle;
 
-	public void Init (Circle target) {
+	public void Init (BaseEnemy target) {
 		this.target = target;
-		player = GameManager.Instance.player1.firePos;
+		player = GameManager.Instance.player.firePos;
 		circle = target.transform;
 		myRender.size =  new Vector2(1.4f,1.4f);
 		myRender.color = Color.magenta;
 		myRender.transform.position = circle.position;
 		myLine.sortingOrder = -1;
-		myLine.startColor = GameManager.Instance.player1.myRender.color;
+		myLine.startColor = GameManager.Instance.player.myRender.color;
 		myLine.endColor = Color.red;
 		myLine.SetPosition(0, Vector3.zero);
 		myLine.SetPosition(1, Vector3.zero);
-		target.myCollider.enabled = false;
-		target.myBody.velocity = Vector2.zero;
+		target.mColl.enabled = false;
+		target.mRigi.velocity = Vector2.zero;
 		gameObject.SetActive(true);
 	}
 
@@ -40,9 +40,9 @@ public class ChainEffect : MonoBehaviour {
 	void OnDisable () {
 		if (target != null) {
 			target.Die();
-			target.myCollider.enabled = true;
+			target.mColl.enabled = true;
 			ExplodeEffect e = (ExplodeEffect)EffectManager.Instance.SpawnEffect(EFFECT_TYPE.EXPLODE, circle.position);
-			e.Init(5, WeaponDataCalculator.LIGHTNING_DAMAGE * GameManager.Instance.player1.baseDamage);
+			e.Init(5, WeaponDataCalculator.LIGHTNING_DAMAGE * GameManager.Instance.player.baseDamage);
 			target = null;
 		}
 	}

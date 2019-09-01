@@ -77,7 +77,6 @@ public class BaseBoss : Damageable {
 			invulnerableParts[i].gameObject.SetActive(false);
 			ExplodeEffect e =  (ExplodeEffect)EffectManager.Instance.SpawnEffect(EFFECT_TYPE.EXPLODE, invulnerableParts[i].transform.position);
 			e.Init(5, 0);
-			CircleManager.Instance.SpawnExplodeEffect(invulnerableParts[i].transform.position, invulnerableParts[i].GetComponent<SpriteRenderer>().color);
 			yield return new WaitForSeconds(0.3f);
 		}
 		for (int i = 0; i < vulnerableParts.Length; i++) {

@@ -8,7 +8,7 @@ public class MaxWeapon : Weapon {
 
 	public override void Init () {
 		base.Init();
-		main = (ShipBaseWeapon)GameManager.Instance.player1.myBaseWeapon;
+		main = (ShipBaseWeapon)GameManager.Instance.player.myBaseWeapon;
 	}
 
 	public override void Activate () {
@@ -20,7 +20,7 @@ public class MaxWeapon : Weapon {
 	public override void Expire () {
 		base.Expire();
 		main.WeaponDataChanged -= HandleWeaponDataChanged;
-		main.GetWeaponData(GameManager.Instance.player1.power);
+		main.GetWeaponData(GameManager.Instance.player.power);
 	}
 
 	void HandleWeaponDataChanged () {
@@ -30,7 +30,7 @@ public class MaxWeapon : Weapon {
 	public override void Remove () {
 		base.Remove();
 		main.WeaponDataChanged -= HandleWeaponDataChanged;
-		main.GetWeaponData(GameManager.Instance.player1.power);
+		main.GetWeaponData(GameManager.Instance.player.power);
 	}
 }
 

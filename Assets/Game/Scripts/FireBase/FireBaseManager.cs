@@ -9,9 +9,6 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
     //-------------Data-----------//
     public TextAsset campaignData;
     public TextAsset shipData;
-    public TextAsset questData;
-    [SerializeField]
-    public TextAsset[] difficulty;
     //----------------------------//
     #endregion;
         
@@ -50,14 +47,7 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
     public void GetDataFromLocal()
     {
         DataManager.Instance.campaign = campaignData.text;
-        DataManager.Instance.ship = shipData.text;
-        DataManager.Instance.quest = questData.text;
-        DataManager.Instance.difficulty = new string[difficulty.Length];
-        for(int i = 0; i < difficulty.Length; i++)
-        {
-            DataManager.Instance.difficulty[i] = difficulty[i].text;
-        }
-
+        DataManager.Instance.ship = shipData.text;       
         ShipDataManager.Instance.InitData();
     }
 #endregion;
@@ -84,7 +74,6 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 			new Parameter("level", CampaignManager.campaign.id.ToString()),
 			new Parameter("tryTime", PlayerData.Instance.retryTimes.ToString()),
 			new Parameter("duration", GameManager.Instance.timePlay.ToString()),
-			new Parameter("progressPercent", (GameManager.Instance.score / (float)CampaignManager.campaign.objective).ToString("P0")),
 			new Parameter ("result", GameManager.Instance.gameResult.ToString()),
 			new Parameter("ship", PlayerData.Instance.selectedShip.ToString()),
 			new Parameter("power", PlayerData.Instance.shipData[PlayerData.Instance.selectedShip].powerLevel.ToString()),

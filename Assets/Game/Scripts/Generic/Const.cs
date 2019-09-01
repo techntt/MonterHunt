@@ -34,21 +34,13 @@ public class Const : MonoBehaviour {
 	public const string VERSION = "version";
 
 	// Data folder links
-	public const string CAMPAIGN_DATA = "CampaignData/campaign";
-	public const string QUEST_DATA = "CampaignData/quest";
-	public const string DAILY_QUEST_DATA = "CampaignData/daily_quest";
-	public const string DIFFICULTY_DATA = "CampaignData/Difficulty/difficulty_";
-	public const string TIMELINE_DATA = "CampaignData/Timeline/timeline_";
-	public const string SHIP_DATA = "CampaignData/ship";
-	public const string FORMATION = "Formation/form_";
-	public const string SPECIAL_OBJECT = "Objects/object_";
-    public const string ORIGINAL_SP = "Samples/original_sp";
+	public const string CAMPAIGN_DATA = "Data/campaign";
+	public const string LEVEL_DATA = "Data/level/level_";
+	public const string SHIP_DATA = "Data/ship";
+	public const string ENEMY = "Enemies/enemy_";
     public const string BOSS = "Boss/boss_";
 	public const string SHIP = "Ship/ship_";
 
 	// tutorial key
-	public const string TUT_PLAY = "tut_play";
-	public const string TUT_QUEST = "tut_quest";
-	public const string TUT_UPGRADE = "tut_upgrade";
 
 }

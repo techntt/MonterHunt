@@ -19,7 +19,7 @@ public class RevivePopup : BasePopup {
 	public override void Show () {
 		isReward = false;
 		Time.timeScale = 0;
-		ship.sprite = GameManager.Instance.player1.myRender.sprite;
+		ship.sprite = GameManager.Instance.player.myRender.sprite;
         InitUI();
         base.Show();
     }
@@ -28,17 +28,7 @@ public class RevivePopup : BasePopup {
     {
         if (GameManager.Instance.phase == GAME_PHASE.BOSS)
             scoreLeft.text = string.Format("Keep fighting!");
-        int obj = CampaignManager.campaign.objective;
-        reviveNow.DOScale(new Vector3(1.4f, 1.4f), 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
-        float des = GameManager.GetLinearValueSimilarTo(0, obj, 0, bar.rect.width, GameManager.Instance.score);
-        shipPos.DOLocalMoveX(des, 1).SetUpdate(true);
-        progress.DOFillAmount((float)GameManager.Instance.score / obj, 1).SetUpdate(true);
-        int scoreValue = 0;
-        DOTween.To(() => scoreValue, x => scoreValue = x, GameManager.Instance.score, 1).SetUpdate(true).OnUpdate(() => {
-            percent.text = string.Format("{0}", Mathf.Min((float)scoreValue / obj, 1).ToString("P0"));
-            if (GameManager.Instance.phase != GAME_PHASE.BOSS)
-                scoreLeft.text = string.Format("Only {0} score more to face the boss", obj - scoreValue);
-        });
+        reviveNow.DOScale(new Vector3(1.4f, 1.4f), 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);        
     }
     
 	public void Close () {

@@ -18,9 +18,6 @@ public class ProgressBar : MonoBehaviour {
 	}
 
 	void CheckScore () {
-		int score = GameManager.Instance.score;
-		int objective = CampaignManager.campaign.objective;
-		float percent = (float)score / objective;
-        slider.value = percent;
+		
 	}
 }

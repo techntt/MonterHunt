@@ -8,26 +8,26 @@ public class Saw : Weapon {
 
 	public override void Start () {
 		base.Start();
-		GameManager.Instance.player1.becomeVulnerable += OnPlayerBecomeVulnerable;
+		GameManager.Instance.player.becomeVulnerable += OnPlayerBecomeVulnerable;
 		DPS = WeaponDataCalculator.SAW_DPS;
-		transform.SetParent(GameManager.Instance.player1.transform);
+		transform.SetParent(GameManager.Instance.player.transform);
 		transform.localPosition = Vector3.zero;
 	}
 
 	void OnPlayerBecomeVulnerable () {
 		if (gameObject.activeSelf)
-			GameManager.Instance.player1.body.enabled = false;
+			GameManager.Instance.player.body.enabled = false;
 	}
 
 	public override void Activate () {
 		base.Activate();
-		transform.position = GameManager.Instance.player1.transform.position;
-		GameManager.Instance.player1.body.enabled = false;
+		transform.position = GameManager.Instance.player.transform.position;
+		GameManager.Instance.player.body.enabled = false;
 	}
 
 	public override void Expire () {
 		base.Expire();
-		GameManager.Instance.player1.body.enabled = true;
+		GameManager.Instance.player.body.enabled = true;
 	}
 
 	void OnTriggerStay2D (Collider2D col) {

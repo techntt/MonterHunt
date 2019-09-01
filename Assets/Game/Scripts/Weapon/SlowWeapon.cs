@@ -10,7 +10,7 @@ public class SlowWeapon : Weapon {
 
 	public override void Init () {
 		base.Init();
-		firePos = GameManager.Instance.player1.firePos;
+		firePos = GameManager.Instance.player.firePos;
 		firingData.bulletSpeed = WeaponDataCalculator.maxBulletSpeed;
 		firingData.fireRate = WeaponDataCalculator.minFireRate;
 	}

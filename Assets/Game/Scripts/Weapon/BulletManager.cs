@@ -37,7 +37,7 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager> {
 		b.type = type;
 		if (type == BulletType.Normal) {
 			if (!sprite)
-				b.myRender.sprite = GameManager.Instance.player1.myBullet;
+				b.myRender.sprite = GameManager.Instance.player.myBullet;
 			else
 				b.myRender.sprite = sprite;
 		} else

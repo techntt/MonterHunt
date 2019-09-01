@@ -13,11 +13,11 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 	public event SingleGameEvent BossDefeated;
 	public event SingleGameEvent BossFinishDie;
 
-	public delegate void CircleEvent (Circle c);
-	public event CircleEvent CircleSpawned;
-	public event CircleEvent CircleExplode;
-	public event CircleEvent CircleExit;
-	public event CircleEvent CircleCollide;
+	public delegate void EnemyEvent (BaseEnemy c);
+	public event EnemyEvent EnemySpawned;
+	public event EnemyEvent EnemyExplode;
+	public event EnemyEvent EnemyExit;
+	public event EnemyEvent EnemyCollide;
 
 	public delegate void PlayerCoinEvent (Player p, Coin c);
 	public event PlayerCoinEvent PlayerGetCoin;
@@ -32,7 +32,6 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 
 	public delegate void PlayerIntEvent (Player p, int value);
 	public event PlayerIntEvent PlayerDealDamage;
-	public event PlayerIntEvent PlayerGetScore;
 	public event PlayerIntEvent PlayerUseCoin;
 
 	public delegate void GamePhaseEvent (GAME_PHASE phase);
@@ -86,24 +85,24 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 			BossFinishDie();
 	}
 
-	public void OnCircleSpawned (Circle c) {
-		if (CircleSpawned != null)
-			CircleSpawned(c);
+	public void OnEnemySpawned (BaseEnemy c) {
+		if (EnemySpawned != null)
+            EnemySpawned(c);
 	}
 
-	public void OnCircleExplode (Circle c) {
-		if (CircleExplode != null)
-			CircleExplode(c);
+	public void OnCircleExplode (BaseEnemy c) {
+		if (EnemyExplode != null)
+			EnemyExplode(c);
 	}
 
-	public void OnCircleExit (Circle c) {
-		if (CircleExit != null)
-			CircleExit(c);
+	public void OnEnemyExit (BaseEnemy c) {
+		if (EnemyExit != null)
+			EnemyExit(c);
 	}
 
-	public void OnCircleCollide (Circle c) {
-		if (CircleCollide != null)
-			CircleCollide(c);
+	public void OnEnemyCollide (BaseEnemy c) {
+		if (EnemyCollide != null)
+			EnemyCollide(c);
 	}
 
 	public void OnPlayerGetCoin (Player p, Coin c) {
@@ -141,10 +140,6 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 			PlayerDealDamage(p, damage);
 	}
 
-	public void OnPlayerGetScore (Player p, int score) {
-		if (PlayerGetScore != null)
-			PlayerGetScore(p, score);
-	}
 
 	public void OnGamePhaseChanged (GAME_PHASE newPhase) {
 		if (GamePhaseChanged != null)
@@ -165,10 +160,10 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 		BossFinishAppear = null;
 		BossDefeated = null;
 		BossFinishDie = null;
-		CircleSpawned = null;
-		CircleExplode = null;
-		CircleExit = null;
-		CircleCollide = null;
+		EnemySpawned = null;
+		EnemyExplode = null;
+		EnemyExit = null;
+		EnemyCollide = null;
 		PlayerGetCoin = null;
 		PlayerUseCoin = null;
 		PlayerGetBonus = null;
@@ -176,7 +171,6 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
 		PlayerLostHealth = null;
 		PlayerPowerChanged = null;
 		PlayerDealDamage = null;
-		PlayerGetScore = null;
 		GamePhaseChanged = null;
 		ButtonPressed = null;
 	}

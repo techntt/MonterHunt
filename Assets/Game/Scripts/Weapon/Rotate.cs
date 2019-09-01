@@ -17,7 +17,7 @@ public class Rotate : Weapon {
 
 	public override void Init () {
 		base.Init();
-		firePos = GameManager.Instance.player1.firePos;
+		firePos = GameManager.Instance.player.firePos;
 	}
 
 	public override void Activate () {
@@ -39,7 +39,7 @@ public class Rotate : Weapon {
 				firingData.bulletSpeed = WeaponDataCalculator.minBulletSpeed;
 				firingData.fireRate = WeaponDataCalculator.superFireRate;
 				firingData.maxRays = 1;
-				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player1.baseDamage * WeaponDataCalculator.ROTATE_CYAN * firingData.fireRate / firingData.maxRays;
+				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player.baseDamage * WeaponDataCalculator.ROTATE_CYAN * firingData.fireRate / firingData.maxRays;
 				maxOpenAngle = 0;
 				rotateSpeed = 360;
 				bulletColor = Color.cyan;
@@ -48,7 +48,7 @@ public class Rotate : Weapon {
 				firingData.bulletSpeed = WeaponDataCalculator.maxBulletSpeed;
 				firingData.fireRate = 0.02f;
 				firingData.maxRays = 2;
-				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player1.baseDamage * WeaponDataCalculator.ROTATE_YELLOW * firingData.fireRate / firingData.maxRays;
+				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player.baseDamage * WeaponDataCalculator.ROTATE_YELLOW * firingData.fireRate / firingData.maxRays;
 				maxOpenAngle = 30;
 				rotateSpeed = 540;
 				bulletColor = Color.yellow;
@@ -57,7 +57,7 @@ public class Rotate : Weapon {
 				firingData.bulletSpeed = WeaponDataCalculator.superBulletSpeed;
 				firingData.fireRate = 0.015f;
 				firingData.maxRays = 3;
-				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player1.baseDamage * WeaponDataCalculator.ROTATE_RED * firingData.fireRate / firingData.maxRays;
+				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player.baseDamage * WeaponDataCalculator.ROTATE_RED * firingData.fireRate / firingData.maxRays;
 				maxOpenAngle = 90;
 				rotateSpeed = 720;
 				bulletColor = Color.red;

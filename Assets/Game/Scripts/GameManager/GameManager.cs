@@ -22,25 +22,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	public Rect gameView;
 	public GAME_RESULT gameResult;
 	public GAME_STATE state;
-	GAME_PHASE _phase;
-
-	public GAME_PHASE phase {
-		get { 
-			return _phase;
-		}
-		set { 
-			_phase = value;
-			if (value == GAME_PHASE.PHASE1)
-				phaseCap = CampaignManager.campaign.objective / 3;
-			else if (value == GAME_PHASE.PHASE2)
-				phaseCap = CampaignManager.campaign.objective * 2 / 3;
-			else if (value == GAME_PHASE.PHASE3)
-				phaseCap = CampaignManager.campaign.objective;
-			GameEventManager.Instance.OnGamePhaseChanged(_phase);
-		}
-	}
-
-	int phaseCap;
+	
 
 	int _timePlay;
 
@@ -54,27 +36,23 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 				OnTimeChange(_timePlay);
 		}
 	}
-
-	[HideInInspector]
-	public int score;
+    
 	[HideInInspector]
 	public int coin;
-	[HideInInspector]
-	public int bonusCoin;
 	public bool isRevived;
-
 	public int goldPerCoin;    
 
 	public delegate void TimeChange (int time);
 	public event TimeChange OnTimeChange;
 
-	public Player player1;
+	public Player player;
+    public GAME_PHASE phase;
 
 	void Awake () {
 		PopupManager.Instance.scene = SCENE.GAME;
 		GameObject go = Instantiate(Resources.Load(Const.SHIP + (int)PlayerData.Instance.selectedShip)) as GameObject;
 //		GameObject go = Instantiate(Resources.Load(Const.SHIP + 2)) as GameObject;
-		player1 = (Player)go.GetComponent(typeof(Player));
+		player = (Player)go.GetComponent(typeof(Player));
 		gameView.xMin = wallLeft.position.x;
 		gameView.xMax = wallRight.position.x;
 		gameView.yMin = -5;
@@ -84,7 +62,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	void Start () {
 		gameResult = GAME_RESULT.NONE;
 		state = GAME_STATE.PREPARE;
-		GameEventManager.Instance.PlayerGetScore += HandlePlayerGetScore;
 		GameEventManager.Instance.PlayerDead += HandlePlayerDead;
 		GameEventManager.Instance.PlayerRevive += HandlePlayerRevive;
 		GameEventManager.Instance.BossDefeated += HandleBossDefeated;
@@ -102,8 +79,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		yield return new WaitForSeconds(2);
 		timePlay = 0;
 		state = GAME_STATE.PLAY;
-		phase = GAME_PHASE.PHASE1;
-		GameEventManager.Instance.OnGameStart();
+        phase = GAME_PHASE.ENEMY;
+        GameEventManager.Instance.OnGameStart();
 		InvokeRepeating("AddTime", 1, 1);
 		GlobalEventManager.Instance.OnGameStart();
 	}
@@ -135,17 +112,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 
 	public void GameOver () {        
 		PlayerData.Instance.retryTimes++;
-		phase = GAME_PHASE.NONE;
 		state = GAME_STATE.GAME_OVER;
 		GameEventManager.Instance.OnGameEnd();
 		GlobalEventManager.Instance.OnGameEnd();
-		// save highscore and coin earned
-		bonusCoin = Mathf.CeilToInt(300f * goldPerCoin * score / CampaignManager.campaign.objective);
-		PlayerData.Instance.gold += coin + bonusCoin;
+		// save highscore and coin earned		
+		PlayerData.Instance.gold += coin;
 		GlobalEventManager.Instance.OnCurrencyChanged("gold", "earn", coin.ToString());
-		if (score >= PlayerData.Instance.bestScore) {
-			PlayerData.Instance.bestScore = score;
-		}
+		
 		// if player defeats the boss, move to next campaign
 		if (gameResult == GAME_RESULT.VICTORY) {
 			PlayerData.Instance.currentMission = Mathf.Min(PlayerData.Instance.currentMission + 1, CampaignManager.maxId);
@@ -193,20 +166,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		return new Color(r / 255f, g / 255f, b / 255f);
 	}
 
-	public void NextPhase () {
-		phase = (GAME_PHASE)((int)phase + 1);
-	}
-
-	void HandlePlayerGetScore (Player p, int value) {
-		score += value;
-		if ((phase == GAME_PHASE.PHASE1 || phase == GAME_PHASE.PHASE2 || phase == GAME_PHASE.PHASE3)
-		    && score >= phaseCap)
-			NextPhase();
-	}
 
 	void HandleBossFinishDie () {
-		player1.GetComponent<InputController>().enabled = false;
-		player1.transform.DOMoveY(10, 6).SetSpeedBased().OnComplete(() => {
+		player.GetComponent<InputController>().enabled = false;
+		player.transform.DOMoveY(10, 6).SetSpeedBased().OnComplete(() => {
 			GameOver();
 		});
 	}
@@ -215,9 +178,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		if (gameResult == GAME_RESULT.NONE) {
 			gameResult = GAME_RESULT.VICTORY;
 			WeaponManager.Instance.DeactivateAllWeapons();
-			player1.body.enabled = false;
-			player1.magnetField.enabled = false;
-			player1.bonusBound.enabled = false;
+			player.body.enabled = false;
+			player.magnetField.enabled = false;
+			player.bonusBound.enabled = false;
 			SoundManager.Instance.PauseMusic();
 		}
 	}
@@ -245,7 +208,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		yield return new WaitForSecondsRealtime(0.2f);
 		gameResult = GAME_RESULT.NONE;
 		state = GAME_STATE.PLAY;
-		player1.Revive();
+		player.Revive();
 		AdsManager.Instance.LoadVideoAd();
 		GameUIManager.Instance.RunCountDown();
 		yield return new WaitForSecondsRealtime(2);
@@ -261,19 +224,18 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	}
 }
 
+public enum GAME_PHASE
+{
+    ENEMY,
+    BOSS,
+    NONE
+}
 public enum CONTROL_STYLE {
 	FOLLOW,
 	FIXED,
 	NONE
 }
 
-public enum GAME_PHASE {
-	PHASE1,
-	PHASE2,
-	PHASE3,
-	BOSS,
-	NONE
-}
 
 public enum GAME_RESULT {
 	NONE,

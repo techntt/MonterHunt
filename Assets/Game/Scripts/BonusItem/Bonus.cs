@@ -27,7 +27,7 @@ public class Bonus : MonoBehaviour {
 			t.Init(GetBonusDescription(type, value), 25, Color.white);
 			gameObject.SetActive(false);
 			SoundManager.Instance.PlaySfx(sfx, SFX_PLAY_STYLE.OVERRIDE);
-			GameEventManager.Instance.OnPlayerGetBonus(GameManager.Instance.player1, type, value);
+			GameEventManager.Instance.OnPlayerGetBonus(GameManager.Instance.player, type, value);
 		}
 	}
 

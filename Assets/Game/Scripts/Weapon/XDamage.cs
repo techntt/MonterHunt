@@ -8,24 +8,24 @@ public class XDamage : Weapon {
 		base.Activate();
 		switch (WeaponManager.Instance.lastValue) {
 			case 0:
-				GameManager.Instance.player1.xDamage = WeaponDataCalculator.POWER_X_2;
+				GameManager.Instance.player.xDamage = WeaponDataCalculator.POWER_X_2;
 				break;
 			case 1:
-				GameManager.Instance.player1.xDamage = WeaponDataCalculator.POWER_X_3;
+				GameManager.Instance.player.xDamage = WeaponDataCalculator.POWER_X_3;
 				break;
 			case 2:
-				GameManager.Instance.player1.xDamage = WeaponDataCalculator.POWER_X_4;
+				GameManager.Instance.player.xDamage = WeaponDataCalculator.POWER_X_4;
 				break;
 		}
 	}
 
 	public override void Expire () {
 		base.Expire();
-		GameManager.Instance.player1.xDamage = 0;
+		GameManager.Instance.player.xDamage = 0;
 	}
 
 	public override void Remove () {
 		base.Remove();
-		GameManager.Instance.player1.xDamage = 0;
+		GameManager.Instance.player.xDamage = 0;
 	}
 }

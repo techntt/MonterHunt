@@ -8,24 +8,24 @@ public class XPoint : Weapon {
 		base.Activate();
 		switch (WeaponManager.Instance.lastValue) {
 			case 0:
-				GameManager.Instance.player1.xPoint = WeaponDataCalculator.POINT_X2;
+				GameManager.Instance.player.xPoint = WeaponDataCalculator.POINT_X2;
 				break;
 			case 1:
-				GameManager.Instance.player1.xPoint = WeaponDataCalculator.POINT_X3;
+				GameManager.Instance.player.xPoint = WeaponDataCalculator.POINT_X3;
 				break;
 			case 2:
-				GameManager.Instance.player1.xPoint = WeaponDataCalculator.POINT_X4;
+				GameManager.Instance.player.xPoint = WeaponDataCalculator.POINT_X4;
 				break;
 		}
 	}
 
 	public override void Expire () {
 		base.Expire();
-		GameManager.Instance.player1.xPoint = 1;
+		GameManager.Instance.player.xPoint = 1;
 	}
 
 	public override void Remove () {
 		base.Remove();
-		GameManager.Instance.player1.xPoint = 1;
+		GameManager.Instance.player.xPoint = 1;
 	}
 }

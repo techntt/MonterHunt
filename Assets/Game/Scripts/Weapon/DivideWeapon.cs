@@ -14,7 +14,7 @@ public class DivideWeapon : Weapon {
 
 	public override void Init () {
 		base.Init();
-		firePos = GameManager.Instance.player1.firePos;
+		firePos = GameManager.Instance.player.firePos;
 	}
 
 	public override void Activate () {
@@ -37,19 +37,19 @@ public class DivideWeapon : Weapon {
 				firingData.maxRays = 5;
 				maxOpenAngle = 30;
 				bulletType = BulletType.Divide30;
-				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player1.baseDamage * WeaponDataCalculator.DIVIDE_30 * firingData.fireRate / firingData.maxRays;
+				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player.baseDamage * WeaponDataCalculator.DIVIDE_30 * firingData.fireRate / firingData.maxRays;
 				break;
 			case 1:
 				firingData.maxRays = 10;
 				maxOpenAngle = 180;
 				bulletType = BulletType.Divide180;
-				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player1.baseDamage * WeaponDataCalculator.DIVIDE_180 * firingData.fireRate / firingData.maxRays;
+				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player.baseDamage * WeaponDataCalculator.DIVIDE_180 * firingData.fireRate / firingData.maxRays;
 				break;
 			case 2:
 				firingData.maxRays = 20;
 				maxOpenAngle = 360;
 				bulletType = BulletType.Divide360;
-				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player1.baseDamage * WeaponDataCalculator.DIVIDE_360 * firingData.fireRate / firingData.maxRays;
+				damagePerBullet = wdc.DPS(WeaponDataCalculator.MAX_WEAPON_LEVEL) * GameManager.Instance.player.baseDamage * WeaponDataCalculator.DIVIDE_360 * firingData.fireRate / firingData.maxRays;
 				break;
 		}
 		if (maxOpenAngle == 360)

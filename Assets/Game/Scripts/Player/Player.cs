@@ -139,15 +139,10 @@ public class Player : MonoBehaviour {
 			// player take damage
 			TakeDamage(1);
 			// if the col is a circle, fire event
-			if (d is Circle) {
-				Circle c = d as Circle;
-				GameEventManager.Instance.OnCircleCollide(c);
-				if (c.type != CircleType.HARDEN)
-					c.TakeDamage(999999);
+			if (d is BaseEnemy) {
+				BaseEnemy c = d as BaseEnemy;
+				GameEventManager.Instance.OnEnemyCollide(c);				
 			}
-			// if the collider is dummy object, it is destroyed
-			if (d is DummyObject)
-				d.TakeDamage(999999);
 		}
 	}
 
@@ -162,9 +157,7 @@ public class Player : MonoBehaviour {
             if(power<=50)
                 power += 1;
 		}
-		if (Input.GetKey(KeyCode.S)) {
-			GameEventManager.Instance.OnPlayerGetScore(this, 1);
-		}
+		
 		if (Input.GetKeyDown(KeyCode.Comma)) {
 			Bonus b = BonusManager.Instance.GetBonus(BonusManager.Instance.GetRandomBonusType());
 			if (b != null) {
