@@ -9,7 +9,6 @@ public class TestScene : MonoBehaviour {
 	void Awake () {
 		PlayerData.Instance.currentMission = mission;
 		CampaignManager.ReadData();
-		QuestManager.InitQuest();
 	}
 
 	void Start () {

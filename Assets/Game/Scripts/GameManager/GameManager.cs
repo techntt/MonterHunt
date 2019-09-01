@@ -63,9 +63,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	public int bonusCoin;
 	public bool isRevived;
 
-	public int goldPerCoin;
-
-	bool isTutorial;
+	public int goldPerCoin;    
 
 	public delegate void TimeChange (int time);
 	public event TimeChange OnTimeChange;
@@ -91,19 +89,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		GameEventManager.Instance.PlayerRevive += HandlePlayerRevive;
 		GameEventManager.Instance.BossDefeated += HandleBossDefeated;
 		GameEventManager.Instance.BossFinishDie += HandleBossFinishDie;
-		QuestManager.TrackQuest();
 		SoundManager.Instance.PlayGameMusic();
 		AdsManager.Instance.LoadVideoAd();
-		if (PlayerPrefs.GetInt(Const.TUT_PLAY, 0) != 0) {
-			isTutorial = false;
-			AdsManager.Instance.LoadInterAd();
-			StartCoroutine(OnStart());
-		} else {
-			isTutorial = true;
-			PlayerPrefs.SetInt(Const.TUT_PLAY, 1);
-			TutorialManager.Instance.SwipeToPlay();
-		}
-		goldPerCoin = 10 + CampaignManager.campaign.id + 5 * (int)PlayerData.Instance.selectedShip;
+        AdsManager.Instance.LoadInterAd();
+        StartCoroutine(OnStart());
+        goldPerCoin = 10 + CampaignManager.campaign.id + 5 * (int)PlayerData.Instance.selectedShip;
 	}
 
 	IEnumerator OnStart () {
@@ -118,11 +108,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		GlobalEventManager.Instance.OnGameStart();
 	}
 
-	void Update () {
-		if (isTutorial && Input.GetMouseButtonDown(0)) {
-			isTutorial = false;
-			StartCoroutine(OnStart());
-		}
+	void Update () {		
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			if (state == GAME_STATE.PLAY)
 				Pause();
@@ -153,7 +139,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		state = GAME_STATE.GAME_OVER;
 		GameEventManager.Instance.OnGameEnd();
 		GlobalEventManager.Instance.OnGameEnd();
-        QuestManager.SaveQuest();
 		// save highscore and coin earned
 		bonusCoin = Mathf.CeilToInt(300f * goldPerCoin * score / CampaignManager.campaign.objective);
 		PlayerData.Instance.gold += coin + bonusCoin;

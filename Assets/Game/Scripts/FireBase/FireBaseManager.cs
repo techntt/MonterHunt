@@ -29,7 +29,7 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
                 firebaseInitialized = true;
 
             } else {
-				UnityEngine.Debug.LogError(System.String.Format(
+				Debug.LogError(System.String.Format(
 					"Could not resolve all Firebase dependencies: {0}", dependencyStatus));
 				// Firebase Unity SDK is not safe to use here.
 			}
@@ -37,8 +37,6 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 	}
 
 	void Start () {
-		GlobalEventManager.Instance.NewQuestAdded += HandleQuestAdded;
-		GlobalEventManager.Instance.QuestComplete += HandleQuestCompleted;
 		GlobalEventManager.Instance.ButtonPressed += HandleButtonPressed;
 		GlobalEventManager.Instance.currencyChanged += HandleCurrencyChanged;
 		GlobalEventManager.Instance.watchAds += HandleWatchAds;
@@ -147,33 +145,7 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 		};
         FirebaseAnalytics.LogEvent(FirebaseEvent.buttonPressed, p);
 	}
-
-	void HandleQuestCompleted (Quest q) {
-        if (!firebaseInitialized)
-            return;
-        Parameter[] p = new Parameter[] {
-			new Parameter("id", q.id.ToString()),
-			new Parameter("type", q.questType.ToString()),
-			new Parameter("value", q.value.ToString()),
-			new Parameter("value2", q.value2.ToString()),
-            new Parameter("duration", q.duration.ToString()),
-            new Parameter("times", q.times.ToString())
-        };
-        FirebaseAnalytics.LogEvent(FirebaseEvent.questComplete, p);
-	}
-
-	void HandleQuestAdded (Quest q) {
-        if (!firebaseInitialized)
-            return;
-        Parameter[] p = new Parameter[] {
-			new Parameter("id", q.id.ToString()),
-			new Parameter("type", q.questType.ToString()),
-			new Parameter("value", q.value.ToString()),
-			new Parameter("value2", q.value2.ToString())
-		};
-        FirebaseAnalytics.LogEvent(FirebaseEvent.questAdded, p);
-	}
-
+    
 	public void SendUserProperty () {
         if (!firebaseInitialized)
             return;
@@ -193,8 +165,6 @@ public class FireBaseManager : SingletonMonoBehaviour<FireBaseManager> {
 }
 
 public class FirebaseEvent {
-	public const string questComplete = "QuestCompleted";
-	public const string questAdded = "QuestAdded";
 	public const string buttonPressed = "ButtonPressed";
 	public const string currencyChanged = "CurrencyChanged";
 	public const string campaignStart = "CampaignStart";

@@ -8,7 +8,7 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 	//----------new UI content--------------
 	public Text goldText;
 	public Text rankText;
-	public Image questNotice;
+	public Image droneNotice;
 	public Image upgradeNotice;
 	public Sprite[] missionBg;
 	public RectTransform PlayBtn;
@@ -27,7 +27,6 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 	void Awake () {
 		CheckVersion();
 		CampaignManager.ReadData();
-		QuestManager.InitQuest();
 		state = HOME_STATE.NO_POPUP;
 	}
 
@@ -36,17 +35,6 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 		if (!SoundManager.Instance.music.isPlaying)
 			SoundManager.Instance.PlayGameMusic();
 		InitUI();
-		// check tutorial
-		if (PlayerPrefs.GetInt(Const.TUT_PLAY, 0) == 0)
-			TutorialManager.Instance.PointToStartButton();
-		else if (PlayerPrefs.GetInt(Const.TUT_QUEST, 0) == 0 && questNotice.enabled) {
-			TutorialManager.Instance.CheckQuest();
-			PlayerPrefs.SetInt(Const.TUT_QUEST, 1);
-		}
-		else if (PlayerPrefs.GetInt(Const.TUT_UPGRADE, 0) == 0 && upgradeNotice.enabled) {
-			TutorialManager.Instance.CheckUpgrade();
-		}
-
 		FireBaseManager.Instance.SendUserProperty();
 	}
 
@@ -97,12 +85,7 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
         tvFuture.text = (c.id + 2).ToString();
 		missionBoss.sprite = missionBg[c.bossID];
 		// check if player can upgrade current ship
-		UpgradeNotice();
-		// check if there's any completed quest
-		if (QuestManager.hasCompletedQuest)
-			questNotice.enabled = true;
-		else
-			questNotice.enabled = false;
+		UpgradeNotice();		
 	}
 
 	public void UpgradeNotice () {
@@ -131,7 +114,6 @@ public class HomeManager : SingletonMonoBehaviour<HomeManager> {
 	void OnDestroy () {
 		PlayerData.Instance.OnGoldChange -= PlayerData_Instance_OnGoldChange;
 		PlayerData.Instance.OnCrystalChange -= PlayerData_Instance_OnCrystalChange;
-		QuestManager.SaveQuest();
 		PlayerData.Instance.SaveAllData();
 	}
 

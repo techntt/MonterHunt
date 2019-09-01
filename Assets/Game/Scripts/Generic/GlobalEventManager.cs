@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GlobalEventManager : SingletonMonoBehaviour<GlobalEventManager> {
 
-	public delegate void QuestEvent (Quest q);
-	public event QuestEvent QuestComplete;
-	public event QuestEvent NewQuestAdded;
-
 	public delegate void ButtonEvent (string screen, string btnName);
 	public event ButtonEvent ButtonPressed;
 
@@ -25,16 +21,7 @@ public class GlobalEventManager : SingletonMonoBehaviour<GlobalEventManager> {
 	public delegate void IntEvent (int id);
 	public event IntEvent DailyQuestCompleted;
 
-	public void OnQuestCompleted (Quest q) {
-		if (QuestComplete != null)
-			QuestComplete(q);
-	}
-
-	public void OnNewQuestAdded (Quest q) {
-		if (NewQuestAdded != null)
-			NewQuestAdded(q);
-	}
-
+    
 	public void OnButtonPressed (string screen, string btnName) {
 		if (ButtonPressed != null)
 			ButtonPressed(screen, btnName);

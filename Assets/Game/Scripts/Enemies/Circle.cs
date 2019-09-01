@@ -70,16 +70,6 @@ public class Circle : Damageable {
 			GameEventManager.Instance.OnCircleSpawned(this);
 	}
 
-//    public void OnStop()
-//    {
-//        myBody.velocity = Vector2.zero;
-//    }
-//
-//    public float Sub1HP()
-//    {       
-//        hp -= 1;
-//        return hp;
-//    }
 
 	void OnTriggerEnter2D (Collider2D col) {
 //		if (!isDead && !isSucked) {

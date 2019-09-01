@@ -27,8 +27,8 @@ public class Camera189 : SingletonMonoBehaviour<Camera189> {
         gameView.xMax = unitWidth;
         gameView.yMin = -cameraGameplay.orthographicSize;
         gameView.yMax = cameraGameplay.orthographicSize;
-        Debug.Log("Ratio: " + ratio);
-        Debug.Log("Y: [" + gameView.yMin + ", " + gameView.yMax + "]");
-        Debug.Log("X: [" + gameView.xMin + ", " + gameView.xMax + "]");
+        //Debug.Log("Ratio: " + ratio);
+        //Debug.Log("Y: [" + gameView.yMin + ", " + gameView.yMax + "]");
+        //Debug.Log("X: [" + gameView.xMin + ", " + gameView.xMax + "]");
     }
 }
