@@ -10,26 +10,35 @@ public class EnemySpawer : SingletonMonoBehaviour<EnemySpawer>
     #region Member Variables
     private List<Wave> waves;
     private int cWave;
-    private int minHP, maxHP;    
+    private int minHP, maxHP;
+    private float minDelay = 0.3f, maxDelay = 1;
+    private int enemyExist;
     #endregion;
 
     #region Unity Methods
     private void Awake()
+    {
+        GameEventManager.Instance.GameStart += HandleGameStart;
+        GameEventManager.Instance.EnemyExplode += HandleEnemyDie;
+    }
+
+    private void Start()
     {
         ReadLevelData();
     }
     #endregion;
 
     #region Public Methods
+
     #endregion;
 
     #region Private Methods
     private void ReadLevelData()
     {
-        TextAsset lvAsset = Resources.Load<TextAsset>(Const.LEVEL_DATA+ CampaignManager.campaign.id);
+        TextAsset lvAsset = Resources.Load<TextAsset>(Const.LEVEL_DATA + CampaignManager.campaign.id);
         List<Dictionary<string, string>> listTurn = CSVReader.ReadDataToList(lvAsset.text);
         waves = new List<Wave>();
-        foreach(Dictionary<string,string> dict in listTurn)
+        foreach (Dictionary<string, string> dict in listTurn)
         {
             //Debug.Log("wave : " + dict["wave"]);
             //Debug.Log("minHP : " + dict["minHP"]);
@@ -39,11 +48,12 @@ public class EnemySpawer : SingletonMonoBehaviour<EnemySpawer>
             wave.id = dict["wave"];
             wave.minHP = float.Parse(dict["minHP"]);
             wave.maxHP = float.Parse(dict["maxHP"]);
+            wave.number = int.Parse(dict["number"]);
             string enemyStr = dict["enemy"];
             if (enemyStr.Contains(":"))
             {
                 string[] lstEnemy = enemyStr.Split(new char[] { ':' });
-                for(int i = 0; i < lstEnemy.Length; i++)
+                for (int i = 0; i < lstEnemy.Length; i++)
                 {
                     string[] data = lstEnemy[i].Split(new char[] { '-' });
                     EnemyPercent ep = new EnemyPercent(data[0], data[1]);
@@ -59,18 +69,70 @@ public class EnemySpawer : SingletonMonoBehaviour<EnemySpawer>
             waves.Add(wave);
         }
 
-        Debug.Log("Wave 0 test read enemy id: " + waves[0].GetEID());
-        Debug.Log("Wave 1 test read enemy id: " + waves[1].GetEID());
-        Debug.Log("Wave 2 test read enemy id: " + waves[2].GetEID());
-        Debug.Log("Wave 3 test read enemy id: " + waves[3].GetEID());
-        Debug.Log("Wave 4 test read enemy id: " + waves[4].GetEID());
     }
+
+
+
+    private IEnumerator SpawnWave(Wave wave)
+    {
+        for(int i = 0; i < wave.number; i++)
+        {
+            SpawnEnemy(wave.GetEID());
+            if (i == wave.number - 1)
+                yield return null;
+            else
+                yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        }
+    }
+
+
+    private void SpawnEnemy(string id)
+    {
+
+    }
+
+    private void HandleGameStart()
+    {
+        cWave = 0;
+        StartWave();
+    }
+
+    private void StartWave()
+    {
+        Wave wave = waves[cWave];
+        enemyExist = wave.number;
+        StartCoroutine(SpawnWave(wave));
+    }
+
+
+    private void HandleEnemyDie(BaseEnemy enemy)
+    {
+        enemyExist -= 1;
+        if (enemyExist <= 0)
+        {
+            // All enemy of wave is killed
+            if(cWave < waves.Count)
+            {
+                // Start next wave
+                cWave++;
+                Invoke("StartWave", 2);
+            }
+            else
+            {
+                // Create boss
+
+            }
+        }
+    }
+
+    
     #endregion;
 
     #region Private Class
     private class Wave
     {
         public string id;
+        public int number;
         public float minHP, maxHP;
         public List<EnemyPercent> enemies;
 
@@ -101,6 +163,14 @@ public class EnemySpawer : SingletonMonoBehaviour<EnemySpawer>
         {
             this.id = id.Trim();
             this.percent = float.Parse(percent.Trim());
+            int num = 5;
+            if (this.percent > 50)
+                num = 7;
+            else if (this.percent < 30)
+                num = 5;
+            else
+                num = 2;
+            EnemyManager.Instance.PrepareEnemy(id,num);
         }
     }
     #endregion;

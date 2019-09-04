@@ -26,7 +26,7 @@ public class Coin : MonoBehaviour {
 	}
 
 	public void Init () {
-		if (!GameManager.Instance.gameView.Contains(transform.localPosition)) {
+		if (!Camera189.gameView.Contains(transform.localPosition)) {
 			CoinManager.Instance.PushCoin(this);
 			return;
 		}

@@ -13,7 +13,7 @@ public class Bonus : MonoBehaviour {
 	public float speed;
 
 	public void Init () {
-		if (!GameManager.Instance.gameView.Contains(transform.localPosition)) {
+		if (!Camera189.gameView.Contains(transform.localPosition)) {
 			BonusManager.Instance.PushBonus(this);
 			return;
 		}

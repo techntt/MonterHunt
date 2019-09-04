@@ -8,7 +8,7 @@ public class InputController : MonoBehaviour {
 	Vector2 dis;
 
 	void Start () {
-		screenBound.x = GameManager.Instance.gameView.xMin;
+		screenBound.x = Camera189.gameView.xMin;
 		screenBound.width = screenBound.x * -2;
 	}
 

@@ -18,8 +18,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	};
 
 	public SpriteRenderer background;
-	public Transform wallLeft, wallRight;
-	public Rect gameView;
 	public GAME_RESULT gameResult;
 	public GAME_STATE state;
 	
@@ -53,10 +51,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		GameObject go = Instantiate(Resources.Load(Const.SHIP + (int)PlayerData.Instance.selectedShip)) as GameObject;
 //		GameObject go = Instantiate(Resources.Load(Const.SHIP + 2)) as GameObject;
 		player = (Player)go.GetComponent(typeof(Player));
-		gameView.xMin = wallLeft.position.x;
-		gameView.xMax = wallRight.position.x;
-		gameView.yMin = -5;
-		gameView.yMax = 5;
+		
 	}
 
 	void Start () {

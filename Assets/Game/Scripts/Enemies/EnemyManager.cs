@@ -20,7 +20,14 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #region Public Methods
     public void PrepareEnemy(string id,int number =5)
     {
-        Stack<BaseEnemy> stack = new Stack<BaseEnemy>();        
+        Stack<BaseEnemy> stack = new Stack<BaseEnemy>();
+        if (ePool.ContainsKey("enemy_" + id))
+        {
+            ePool["enemy_" + id] = stack;
+            if(stack.Count >= 5)
+                return;
+        }
+            
         for (int i = 0; i < number; i++)
         {
             GameObject go = Instantiate(Resources.Load<GameObject>(Const.ENEMY+id)) as GameObject;
