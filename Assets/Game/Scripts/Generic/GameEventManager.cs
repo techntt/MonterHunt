@@ -90,7 +90,7 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager> {
             EnemySpawned(c);
 	}
 
-	public void OnCircleExplode (BaseEnemy c) {
+	public void OnEnemyExplode (BaseEnemy c) {
 		if (EnemyExplode != null)
 			EnemyExplode(c);
 	}

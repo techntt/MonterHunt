@@ -6,74 +6,56 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 {
     #region Member Varibales
     private Transform mTrans;
-    private Dictionary<string, Stack<BaseEnemy>> ePool;
+    private Queue<BaseEnemy> ePool;
+    public GameObject enemySample;
+    public Sprite[] sprites;
     #endregion;
 
     #region Unity Methods
     private void Awake()
     {
         mTrans = transform;
-        ePool = new Dictionary<string, Stack<BaseEnemy>>();
+        ePool = new Queue<BaseEnemy>();
+        PrepareEnemy();
     }
     #endregion;
 
     #region Public Methods
-    public void PrepareEnemy(string id,int number =5)
+    public void PrepareEnemy(int number =5)
     {
-        Stack<BaseEnemy> stack = new Stack<BaseEnemy>();
-        if (ePool.ContainsKey("enemy_" + id))
-        {
-            ePool["enemy_" + id] = stack;
-            if(stack.Count >= 5)
-                return;
-        }
-            
         for (int i = 0; i < number; i++)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>(Const.ENEMY+id)) as GameObject;
+            GameObject go = Instantiate(enemySample) as GameObject;
             BaseEnemy be = go.GetComponent(typeof(BaseEnemy)) as BaseEnemy;
             be.mTrans.SetParent(mTrans);
             go.SetActive(false);
-            stack.Push(be);
+            ePool.Enqueue(be);
         }
-        if (ePool.ContainsKey("enemy_" + id))
-            ePool["enemy_" + id] = stack;
-        else
-            ePool.Add("enemy_" + id,stack);
     }
 
-    public BaseEnemy PopEnemy(string id)
+    public BaseEnemy PopEnemy(ENEMY_STYLE style,float size, Vector2 startPos)
     {
         BaseEnemy be = null;
-        if (ePool.ContainsKey("enemy_" + id))
-        {
-            Stack<BaseEnemy> stack = ePool["enemy_" + id];
-            if (stack.Count > 0)
-                be = stack.Pop();
-        }
+        if (ePool.Count > 0)
+            be = ePool.Dequeue();
         if (be == null)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>(Const.ENEMY + id)) as GameObject;
+            GameObject go = Instantiate(enemySample) as GameObject;
             be = go.GetComponent(typeof(BaseEnemy)) as BaseEnemy;
             be.mTrans.SetParent(mTrans);
             go.SetActive(false);
         }
+        be.mRender.sprite = sprites[(int)style];
+        be.mTrans.position = startPos;
+        be.mRender.size = new Vector2(size, size);
+        be.mColl.radius = size / 2;
         return be;
     }
 
     public void PushEnemy(BaseEnemy be)
     {
-        Stack<BaseEnemy> stack = new Stack<BaseEnemy>();
-        if (ePool.ContainsKey("enemy_" + be.id))
-        {
-            stack = ePool["enemy_" + be.id];
-        }
-        else
-        {
-            stack.Push(be);
-            ePool.Add("enemy_" + be.id, stack);
-        }
         be.gameObject.SetActive(false);
+        ePool.Enqueue(be);
     }
     #endregion;
 

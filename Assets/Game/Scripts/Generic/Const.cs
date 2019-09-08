@@ -11,10 +11,9 @@ public class Const : MonoBehaviour {
     public const string TAG_COIN = "Coin";
 	public const string TAG_MAGNET = "MagnetField";
 	public const string TAG_BULLET = "bullet";
+    public const string TAG_WALL = "wall";
 
 	public const string DUMMY_GRAVITY = "DummyGravity";
-    public const string WALL_LEFT = "wall left";
-    public const string WALL_RIGHT = "wall right";
 
 
     public const string SCENE_HOME = "Home";
