@@ -100,7 +100,9 @@ public class BaseEnemy : Damageable
 
     public void Deactive()
     {
+        inScreen = false;
         isDead = true;
+        mRigi.velocity = Vector2.zero;
         mColl.enabled = false;
         if (ColliderRef.Instance.DamageableRef.ContainsKey(mColl.GetInstanceID()))
             ColliderRef.Instance.DamageableRef.Remove(mColl.GetInstanceID());

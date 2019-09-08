@@ -16,7 +16,6 @@ public class EnemySprite : MonoBehaviour
     {
         if (enemy.inScreen)
         {
-            enemy.inScreen = false;
             enemy.Deactive();
         }            
     }
